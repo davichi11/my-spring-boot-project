@@ -16,7 +16,7 @@ import java.util.Properties;
  * @date 2017-04-20 19:22
  */
 @Configuration
-public class KaptchaConfig {
+public class CaptchaConfig {
 
     @Bean
     public DefaultKaptcha producer() {

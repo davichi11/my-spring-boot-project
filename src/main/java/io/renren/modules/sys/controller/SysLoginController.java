@@ -4,11 +4,13 @@ import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
 import io.renren.common.utils.Result;
 import io.renren.common.utils.ShiroUtils;
+import io.renren.config.OpenCaptcha;
 import io.renren.modules.sys.entity.SysUserEntity;
 import io.renren.modules.sys.service.SysUserService;
 import io.renren.modules.sys.service.SysUserTokenService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +41,8 @@ public class SysLoginController {
     private SysUserService sysUserService;
     @Autowired
     private SysUserTokenService sysUserTokenService;
+    @Autowired
+    private OpenCaptcha captcha;
 
 
     @RequestMapping("captcha.jpg")
@@ -65,10 +69,13 @@ public class SysLoginController {
      */
     @RequestMapping(value = "/sys/login", method = RequestMethod.POST)
     public Map<String, Object> login(String username, String password, String captcha) throws IOException {
-//		String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
-//		if(!captcha.equalsIgnoreCase(kaptcha)){
-//			return Result.error("验证码不正确");
-//		}
+        //是否开启验证码
+        if (BooleanUtils.toBoolean(this.captcha.getIsOpen())) {
+            String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
+            if (!captcha.equalsIgnoreCase(kaptcha)) {
+                return Result.error("验证码不正确");
+            }
+        }
 
         //用户信息
         SysUserEntity user = sysUserService.queryByUserName(username);
