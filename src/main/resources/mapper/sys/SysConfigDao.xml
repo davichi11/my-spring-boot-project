@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.renren.modules.sys.dao.SysConfigDao">
+    <cache type="io.renren.common.cache.RedisCache">
+        <property name="eviction" value="LRU" />
+        <property name="flushInterval" value="6000000" />
+        <property name="size" value="1024" />
+        <property name="readOnly" value="false" />
+    </cache>
+
+    <select id="queryObject" resultType="io.renren.modules.sys.entity.SysConfigEntity">
+        SELECT *
+        FROM sys_config
+        WHERE id = #{id}
+    </select>
+
+    <select id="queryList" parameterType="map" resultType="io.renren.modules.sys.entity.SysConfigEntity">
+        select * from sys_config where status = 1
+        <if test="key != null and key.trim() != ''">
+            and `key` like concat('%',#{key},'%')
+        </if>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="queryTotal" parameterType="map" resultType="int">
+        select count(*) from sys_config where status = 1
+        <if test="key != null and key.trim() != ''">
+            and `key` like concat('%',#{key},'%')
+        </if>
+    </select>
+
+    <insert id="save" parameterType="io.renren.modules.sys.entity.SysConfigEntity" flushCache="true">
+        INSERT INTO sys_config (`key`, `value`, remark)
+        VALUES (#{key}, #{value}, #{remark})
+    </insert>
+
+    <update id="update" parameterType="io.renren.modules.sys.entity.SysConfigEntity" flushCache="true">
+        UPDATE sys_config
+        SET `key` = #{key}, `value` = #{value}, remark = #{remark}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 根据key，更新value -->
+    <update id="updateValueByKey" parameterType="map" flushCache="true">
+        UPDATE sys_config
+        SET `value` = #{value}
+        WHERE `key` = #{key}
+    </update>
+
+    <!-- 根据key，查询value -->
+    <select id="queryByKey" parameterType="string" resultType="string">
+        SELECT value
+        FROM sys_config
+        WHERE `key` = #{key}
+    </select>
+
+    <delete id="deleteBatch" parameterType="int" flushCache="true">
+        delete from sys_config where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+
+</mapper>

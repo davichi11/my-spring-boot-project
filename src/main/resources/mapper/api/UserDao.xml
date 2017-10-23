@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.api.dao.UserDao">
+
+    <insert id="save" parameterType="io.renren.modules.api.entity.UserEntity" useGeneratedKeys="true"
+            keyProperty="userId">
+        INSERT INTO tb_user
+        (
+            `username`,
+            `mobile`,
+            `password`,
+            `create_time`
+        )
+        VALUES
+            (
+                #{username},
+                #{mobile},
+                #{password},
+                #{createTime}
+            )
+    </insert>
+
+    <select id="queryObject" resultType="io.renren.modules.api.entity.UserEntity">
+        SELECT *
+        FROM tb_user
+        WHERE user_id = #{value}
+    </select>
+
+    <select id="queryByMobile" resultType="io.renren.modules.api.entity.UserEntity">
+        SELECT *
+        FROM tb_user
+        WHERE mobile = #{value}
+    </select>
+
+    <select id="queryList" resultType="io.renren.modules.api.entity.UserEntity">
+        SELECT * FROM tb_user
+        <where>
+            <if test="mobile !='' and mobile !=null">
+                mobile = #{mobile}
+            </if>
+            <if test="username !='' and username !=null">
+                username = #{username}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryTotal" resultType="io.renren.modules.api.entity.UserEntity">
+        SELECT count(1) FROM tb_user
+        <where>
+            <if test="mobile !='' and mobile !=null">
+                mobile = #{mobile}
+            </if>
+            <if test="username !='' and username !=null">
+                username = #{username}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteBatch">
+        delete from tb_user where user_id in
+        <foreach item="user_id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="queUserEntity" resultType="io.renren.modules.api.entity.UserEntity">
+
+    </select>
+
+</mapper>

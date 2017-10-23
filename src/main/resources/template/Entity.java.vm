@@ -1,0 +1,40 @@
+package ${package}.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+
+#if(${hasBigDecimal})
+import java.math.BigDecimal;
+#end
+
+
+/**
+ * ${comments}
+ * 
+ * @author ${author}
+ * @email ${email}
+ * @date ${datetime}
+ */
+public class ${className}Entity implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
+#foreach ($column in $columns)
+	//$column.comments
+	private $column.attrType $column.lowAttrName;
+#end
+
+#foreach ($column in $columns)
+	/**
+	 * 设置：${column.comments}
+	 */
+	public void set${column.attrName}($column.attrType $column.lowAttrName) {
+		this.$column.lowAttrName = $column.lowAttrName;
+	}
+	/**
+	 * 获取：${column.comments}
+	 */
+	public $column.attrType get${column.lowAttrName}() {
+		return $column.lowAttrName;
+	}
+#end
+}
