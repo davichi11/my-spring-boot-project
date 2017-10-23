@@ -52,6 +52,7 @@ let vm = new Vue({
         generator: () => {
             let tableNames = getSelectedRows();
             if (isNull(tableNames)) {
+                alert("请选择一项");
                 return;
             }
             $.ajax({
