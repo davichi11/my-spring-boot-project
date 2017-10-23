@@ -58,9 +58,8 @@ let vm = new Vue({
         }
     },
     methods: {
-        query: () => {
-            vm.reload();
-        },
+        query: () => vm.reload(),
+        reset: () => vm.q.username = "",
         add: () => {
             vm.showList = false;
             vm.title = "新增";

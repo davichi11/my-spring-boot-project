@@ -47,6 +47,7 @@ let vm = new Vue({
     },
     methods: {
         query: () => vm.reload(),
+        reset: () => vm.q.key = "",
         reload: event => {
             let page = $("#jqGrid").jqGrid('getGridParam', 'page');
             $("#jqGrid").jqGrid('setGridParam', {

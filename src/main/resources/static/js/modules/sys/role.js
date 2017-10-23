@@ -65,9 +65,8 @@ let vm = new Vue({
         role: {}
     },
     methods: {
-        query: () => {
-            vm.reload();
-        },
+        query: () => vm.reload(),
+        reset: () => vm.q.roleName = "",
         add: () => {
             vm.showList = false;
             vm.title = "新增";

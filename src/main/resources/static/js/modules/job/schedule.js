@@ -53,9 +53,8 @@ let vm = new Vue({
         schedule: {}
     },
     methods: {
-        query: () => {
-            vm.reload();
-        },
+        query: () => vm.reload(),
+        reset: () => vm.q.beanName = "",
         add: () => {
             vm.showList = false;
             vm.title = "新增";

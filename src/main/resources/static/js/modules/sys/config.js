@@ -47,6 +47,7 @@ let vm = new Vue({
     },
     methods: {
         query: () => vm.reload(),
+        reset: () => vm.q.key = "",
         add: () => {
             vm.showList = false;
             vm.title = "新增";

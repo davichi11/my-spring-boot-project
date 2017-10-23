@@ -49,6 +49,7 @@ let vm = new Vue({
                 page: 1
             }).trigger("reloadGrid");
         },
+        reset: () => vm.q.tableName = "",
         generator: () => {
             let tableNames = getSelectedRows();
             if (isNull(tableNames)) {
