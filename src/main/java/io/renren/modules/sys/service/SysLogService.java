@@ -69,4 +69,17 @@ public interface SysLogService {
      * @throws Exception
      */
     void deleteBatch(Long[] ids) throws Exception;
+
+    /**
+     * 根据传入的参数删除
+     * @param param 传入删除条件参数 id 开始时间 结束时间
+     * @throws Exception
+     */
+    void deleteByParams(Map<String, Object> param) throws Exception;
+
+    /**
+     * 保存异常的日志信息
+     * @param params
+     */
+    void saveErrorLog(String params);
 }

@@ -54,7 +54,8 @@ public class ScheduleUtils {
                     .withMisfireHandlingInstructionDoNothing();
 
             //按新的cronExpression表达式构建一个新的trigger
-            CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(getTriggerKey(scheduleJob.getJobId())).withSchedule(scheduleBuilder).build();
+            CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(getTriggerKey(scheduleJob.getJobId()))
+                    .withSchedule(scheduleBuilder).build();
 
             //放入参数，运行时的方法可以获取
             jobDetail.getJobDataMap().put(ScheduleJobEntity.JOB_PARAM_KEY, new Gson().toJson(scheduleJob));

@@ -1,7 +1,7 @@
 package io.renren.modules.job.utils;
 
 import com.google.gson.Gson;
-import io.renren.common.utils.SpringContextUtils;
+import io.renren.common.utils.ApplicationContextHolder;
 import io.renren.modules.job.entity.ScheduleJobEntity;
 import io.renren.modules.job.entity.ScheduleJobLogEntity;
 import io.renren.modules.job.service.ScheduleJobLogService;
@@ -34,7 +34,7 @@ public class ScheduleJob extends QuartzJobBean {
         ScheduleJobEntity scheduleJob = new Gson().fromJson(jsonJob, ScheduleJobEntity.class);
 
         //获取spring bean
-        ScheduleJobLogService scheduleJobLogService = (ScheduleJobLogService) SpringContextUtils.getBean("scheduleJobLogService");
+        ScheduleJobLogService scheduleJobLogService = (ScheduleJobLogService) ApplicationContextHolder.getBean("scheduleJobLogService");
 
         //数据库保存执行记录
         ScheduleJobLogEntity jobLogEntity = new ScheduleJobLogEntity();

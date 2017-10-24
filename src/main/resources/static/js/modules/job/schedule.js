@@ -62,7 +62,8 @@ let vm = new Vue({
         },
         update: () => {
             let jobId = getSelectedRow();
-            if (jobId === null) {
+            if (isNull(jobId)) {
+                alert("请选择一个任务");
                 return;
             }
 
@@ -73,7 +74,7 @@ let vm = new Vue({
             });
         },
         saveOrUpdate: event => {
-            let url = vm.schedule.jobId === null ? "sys/schedule/save" : "sys/schedule/update";
+            let url = isNull(vm.schedule.jobId) ? "sys/schedule/save" : "sys/schedule/update";
             $.ajax({
                 type: "POST",
                 url: baseURL + url,
@@ -90,7 +91,7 @@ let vm = new Vue({
         },
         del: function () {
             let jobIds = getSelectedRows();
-            if (jobIds === null) {
+            if (isNull(jobIds)) {
                 return;
             }
 
@@ -112,7 +113,8 @@ let vm = new Vue({
         },
         pause: () => {
             let jobIds = getSelectedRows();
-            if (jobIds === null) {
+            if (isNull(jobIds)) {
+                alert("请选择一个任务");
                 return;
             }
 
@@ -136,7 +138,8 @@ let vm = new Vue({
         },
         resume: () => {
             let jobIds = getSelectedRows();
-            if (jobIds === null) {
+            if (isNull(jobIds)) {
+                alert("请选择一个任务");
                 return;
             }
 
@@ -158,7 +161,8 @@ let vm = new Vue({
         },
         runOnce: () => {
             let jobIds = getSelectedRows();
-            if (jobIds === null) {
+            if (isNull(jobIds)) {
+                alert("请选择一个任务");
                 return;
             }
 
@@ -185,6 +189,18 @@ let vm = new Vue({
                 postData: {'beanName': vm.q.beanName},
                 page: page
             }).trigger("reloadGrid");
+        },
+        cron: () => {
+            layer.open({
+                skin: 'layui-layer-molv',
+                title: "在线cron表达式",
+                area: ['750px', '570px'],
+                type: 2,
+                shadeClose: true,
+                shade: 0.8,
+                content: 'http://cron.qqe2.com'
+
+            })
         }
     }
 });

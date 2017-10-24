@@ -1,9 +1,9 @@
 package io.renren.modules.oss.cloud;
 
-import io.renren.modules.sys.service.SysConfigService;
+import io.renren.common.utils.ApplicationContextHolder;
 import io.renren.common.utils.ConfigConstant;
 import io.renren.common.utils.Constant;
-import io.renren.common.utils.SpringContextUtils;
+import io.renren.modules.sys.service.SysConfigService;
 
 /**
  * 文件上传Factory
@@ -16,7 +16,7 @@ public final class OSSFactory {
     private static SysConfigService sysConfigService;
 
     static {
-        OSSFactory.sysConfigService = (SysConfigService) SpringContextUtils.getBean("sysConfigService");
+        OSSFactory.sysConfigService = (SysConfigService) ApplicationContextHolder.getBean("sysConfigService");
     }
 
     public static AbstractCloudStorageService build() {

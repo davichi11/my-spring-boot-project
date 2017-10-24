@@ -15,6 +15,10 @@ import java.util.Optional;
  * @date 2016年12月21日 下午12:53:33
  */
 public final class DateUtils {
+
+    private DateUtils() {
+    }
+
     /**
      * 时间格式(yyyy-MM-dd)
      */

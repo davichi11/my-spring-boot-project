@@ -76,19 +76,19 @@ public interface ScheduleJobService {
      *
      * @param jobIds
      */
-    void run(Long[] jobIds);
+    void run(Long[] jobIds) throws Exception;
 
     /**
      * 暂停运行
      *
      * @param jobIds
      */
-    void pause(Long[] jobIds);
+    void pause(Long[] jobIds) throws Exception;
 
     /**
      * 恢复运行
      *
      * @param jobIds
      */
-    void resume(Long[] jobIds);
+    void resume(Long[] jobIds) throws Exception;
 }

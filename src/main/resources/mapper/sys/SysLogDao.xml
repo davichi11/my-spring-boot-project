@@ -85,4 +85,19 @@
         </foreach>
     </delete>
 
+    <delete id="deleteByParams" parameterType="hashmap">
+        DELETE FROM sys_log
+        <where>
+            <if test="id != null and id != ''">
+                id = #{id}
+            </if>
+            <if test="beginDate != null">
+               and create_date >= #{beginDate}
+            </if>
+            <if test="endDate != null">
+               and create_date &lt;= #{endDate}
+            </if>
+        </where>
+    </delete>
+
 </mapper>

@@ -13,6 +13,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 /**
@@ -60,7 +61,7 @@ public class ScheduleJobController {
     @RequiresPermissions("sys:schedule:save")
     public Result save(@RequestBody ScheduleJobEntity scheduleJob) {
         ValidatorUtils.validateEntity(scheduleJob);
-
+        scheduleJob.setCreateTime(LocalDateTime.now());
         try {
             scheduleJobService.save(scheduleJob);
         } catch (Exception e) {
@@ -114,7 +115,12 @@ public class ScheduleJobController {
     @RequestMapping("/run")
     @RequiresPermissions("sys:schedule:run")
     public Result run(@RequestBody Long[] jobIds) {
-        scheduleJobService.run(jobIds);
+        try {
+            scheduleJobService.run(jobIds);
+        } catch (Exception e) {
+            log.error("执行任务异常", e);
+            return Result.error("执行任务异常");
+        }
 
         return Result.ok();
     }
@@ -126,7 +132,12 @@ public class ScheduleJobController {
     @RequestMapping("/pause")
     @RequiresPermissions("sys:schedule:pause")
     public Result pause(@RequestBody Long[] jobIds) {
-        scheduleJobService.pause(jobIds);
+        try {
+            scheduleJobService.pause(jobIds);
+        } catch (Exception e) {
+            log.error("暂停任务异常", e);
+            Result.error("暂停任务异常");
+        }
 
         return Result.ok();
     }
@@ -138,7 +149,12 @@ public class ScheduleJobController {
     @RequestMapping("/resume")
     @RequiresPermissions("sys:schedule:resume")
     public Result resume(@RequestBody Long[] jobIds) {
-        scheduleJobService.resume(jobIds);
+        try {
+            scheduleJobService.resume(jobIds);
+        } catch (Exception e) {
+            log.error("恢复定时任务异常", e);
+            return Result.error("恢复定时任务异常");
+        }
 
         return Result.ok();
     }

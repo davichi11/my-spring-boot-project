@@ -15,7 +15,16 @@ import java.util.Optional;
  * @email davichi2009@gmail.com
  * @date 2016年11月12日 上午9:49:19
  */
-public class ShiroUtils {
+public final class ShiroUtils {
+
+    private ShiroUtils() {
+    }
+
+    public static String getKaptcha(String key) {
+        Object kaptcha = Optional.ofNullable(getSessionAttribute(key)).orElseThrow(() -> new RRException("验证码已失效"));
+        getSession().removeAttribute(key);
+        return kaptcha.toString();
+    }
 
     public static Session getSession() {
         return SecurityUtils.getSubject().getSession();
@@ -49,10 +58,5 @@ public class ShiroUtils {
         SecurityUtils.getSubject().logout();
     }
 
-    public static String getKaptcha(String key) {
-        Object kaptcha = Optional.ofNullable(getSessionAttribute(key)).orElseThrow(() -> new RRException("验证码已失效"));
-        getSession().removeAttribute(key);
-        return kaptcha.toString();
-    }
 
 }
