@@ -5,7 +5,6 @@ import io.renren.common.utils.Result;
 import io.renren.common.validator.Assert;
 import io.renren.modules.api.annotation.AuthIgnore;
 import io.renren.modules.api.config.JWTConfig;
-import io.renren.modules.api.service.TokenService;
 import io.renren.modules.api.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -34,8 +33,6 @@ import java.util.Map;
 public class ApiLoginController {
     @Autowired
     private UserService userService;
-    @Autowired
-    private TokenService tokenService;
     @Autowired
     private JWTConfig jwtConfig;
 

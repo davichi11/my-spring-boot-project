@@ -11,6 +11,7 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -45,7 +46,7 @@ public class ScheduleJob extends QuartzJobBean {
         jobLogEntity.setCreateTime(LocalDateTime.now());
 
         //任务开始时间
-        long startTime = System.currentTimeMillis();
+        long startTime = Instant.now().toEpochMilli();
 
         try {
             //执行任务
@@ -57,7 +58,7 @@ public class ScheduleJob extends QuartzJobBean {
             future.get();
 
             //任务执行总时长
-            long times = System.currentTimeMillis() - startTime;
+            long times = Instant.now().toEpochMilli() - startTime;
             jobLogEntity.setTimes((int) times);
             //任务状态    0：成功    1：失败
             jobLogEntity.setStatus(0);
@@ -67,7 +68,7 @@ public class ScheduleJob extends QuartzJobBean {
             log.error("任务执行失败，任务ID：" + scheduleJob.getJobId(), e);
 
             //任务执行总时长
-            long times = System.currentTimeMillis() - startTime;
+            long times = Instant.now().toEpochMilli() - startTime;
             jobLogEntity.setTimes((int) times);
 
             //任务状态    0：成功    1：失败

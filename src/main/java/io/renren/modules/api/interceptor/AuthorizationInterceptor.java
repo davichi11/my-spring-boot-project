@@ -5,7 +5,6 @@ import io.jsonwebtoken.Claims;
 import io.renren.common.exception.RRException;
 import io.renren.modules.api.annotation.AuthIgnore;
 import io.renren.modules.api.config.JWTConfig;
-import io.renren.modules.api.service.TokenService;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +26,6 @@ import java.time.LocalDateTime;
  */
 @Component
 public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
-    @Autowired
-    private TokenService tokenService;
     @Autowired
     private JWTConfig jwtConfig;
 
