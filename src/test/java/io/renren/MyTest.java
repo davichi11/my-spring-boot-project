@@ -4,7 +4,6 @@ import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multiset;
 import io.renren.common.utils.GenUtils;
-import org.apache.commons.lang.math.NumberUtils;
 import org.junit.Test;
 
 import java.text.MessageFormat;
@@ -22,14 +21,13 @@ import java.util.concurrent.ConcurrentHashMap;
 public class MyTest {
 
     public static void main(String[] args) {
-        List<String> stringList = Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "7", "8", "9");
-        int sum = stringList.stream().filter(Objects::nonNull).distinct().mapToInt(NumberUtils::toInt).filter(i -> i % 2 == 0).sum();
-        System.out.println(sum);
+//        List<String> stringList = Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "7", "8", "9");
+//        int sum = stringList.stream().filter(Objects::nonNull).distinct().mapToInt(NumberUtils::toInt).filter(i -> i % 2 == 0).sum();
+//        System.out.println(sum);
 
-
-        Thread thread = new Thread(System.out::println);
-
-
+        for (long i = 0; i < 50; i++) {
+            System.out.println(fib(i));
+        }
     }
 
     private boolean testString(int i) {
@@ -70,7 +68,7 @@ public class MyTest {
     private static Long fib(Long n) {
         if (n < 2) return n;
         return cache.computeIfAbsent(n, (key) ->
-                fib(n - 2) + fib(n - 1)
+                fib(n - 1) + fib(n - 2)
         );
     }
 

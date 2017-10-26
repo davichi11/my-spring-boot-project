@@ -30,7 +30,10 @@ public class CloudStorageConfig implements Serializable {
     @NotBlank(message = "七牛绑定的域名不能为空", groups = QiniuGroup.class)
     @URL(message = "七牛绑定的域名格式不正确", groups = QiniuGroup.class)
     private String qiniuDomain;
-    //七牛路径前缀
+
+    /**
+     * 七牛路径前缀
+     */
     private String qiniuPrefix;
     //七牛ACCESS_KEY
     @NotBlank(message = "七牛AccessKey不能为空", groups = QiniuGroup.class)
@@ -46,7 +49,9 @@ public class CloudStorageConfig implements Serializable {
     @NotBlank(message = "阿里云绑定的域名不能为空", groups = AliyunGroup.class)
     @URL(message = "阿里云绑定的域名格式不正确", groups = AliyunGroup.class)
     private String aliyunDomain;
-    //阿里云路径前缀
+    /**
+     * 阿里云路径前缀
+     */
     private String aliyunPrefix;
     //阿里云EndPoint
     @NotBlank(message = "阿里云EndPoint不能为空", groups = AliyunGroup.class)
@@ -65,7 +70,10 @@ public class CloudStorageConfig implements Serializable {
     @NotBlank(message = "腾讯云绑定的域名不能为空", groups = QcloudGroup.class)
     @URL(message = "腾讯云绑定的域名格式不正确", groups = QcloudGroup.class)
     private String qcloudDomain;
-    //腾讯云路径前缀
+
+    /**
+     * 腾讯云路径前缀
+     */
     private String qcloudPrefix;
     //腾讯云AppId
     @NotNull(message = "腾讯云AppId不能为空", groups = QcloudGroup.class)
