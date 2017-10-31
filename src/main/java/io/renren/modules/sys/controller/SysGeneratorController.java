@@ -23,6 +23,7 @@ import java.time.LocalDateTime;
 import java.util.Map;
 
 /**
+ * 代码生成器控制类
  * @author ChunLiang Hu
  * @Company
  * @Project renren-fast
