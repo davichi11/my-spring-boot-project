@@ -2,15 +2,10 @@ spring:
     datasource:
         type: com.alibaba.druid.pool.DruidDataSource
         driverClassName: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/renren_fast?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
+        username: root
+        password: admin
         druid:
-            first:  #数据源1
-                url: jdbc:mysql://localhost:3306/renren_fast?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
-                username: root
-                password: admin
-            second:  #数据源2
-                url: jdbc:mysql://localhost:3306/renren_fast?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
-                username: root
-                password: admin
             initial-size: 10
             max-active: 100
             min-idle: 10
@@ -36,3 +31,7 @@ spring:
                 wall:
                     config:
                         multi-statement-allow: true
+            async-close-connection-enable: true
+
+
+

@@ -1,12 +1,12 @@
 package io.renren.common.aspect;
 
-import com.google.gson.Gson;
+import com.alibaba.fastjson.JSON;
 import io.renren.common.annotation.SysLog;
-import io.renren.common.utils.HttpContextUtils;
 import io.renren.common.utils.IPUtils;
 import io.renren.modules.sys.entity.SysLogEntity;
 import io.renren.modules.sys.entity.SysUserEntity;
 import io.renren.modules.sys.service.SysLogService;
+import io.vertx.ext.web.RoutingContext;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.aspectj.lang.JoinPoint;
@@ -17,7 +17,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 
@@ -60,13 +59,12 @@ public class SysLogAspect {
 
         //请求的参数
         Object[] args = joinPoint.getArgs();
-        String params = new Gson().toJson(args[0]);
-        sysLog.setParams(params);
+        RoutingContext routingContext = (RoutingContext) args[0];
+        sysLog.setParams(JSON.toJSONString(routingContext.request().params()));
 
-        //获取request
-        HttpServletRequest request = HttpContextUtils.getHttpServletRequest();
+
         //设置IP地址
-        sysLog.setIp(IPUtils.getIpAddr(request));
+        sysLog.setIp(IPUtils.getIpAddr(routingContext));
 
         //用户名
         String username = ((SysUserEntity) SecurityUtils.getSubject().getPrincipal()).getUsername();
