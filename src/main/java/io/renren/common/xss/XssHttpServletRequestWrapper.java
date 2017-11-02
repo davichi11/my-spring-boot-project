@@ -5,7 +5,6 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
-import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -55,21 +54,6 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
         json = xssEncode(json);
         final ByteArrayInputStream bis = new ByteArrayInputStream(json.getBytes("utf-8"));
         return new ServletInputStream() {
-            @Override
-            public boolean isFinished() {
-                return true;
-            }
-
-            @Override
-            public boolean isReady() {
-                return true;
-            }
-
-            @Override
-            public void setReadListener(ReadListener readListener) {
-
-            }
-
             @Override
             public int read() throws IOException {
                 return bis.read();
