@@ -3,10 +3,10 @@ package io.renren.modules.sys.entity;
 import io.renren.common.validator.group.AddGroup;
 import io.renren.common.validator.group.UpdateGroup;
 import lombok.Data;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -30,13 +30,13 @@ public class SysUserEntity implements Serializable {
     /**
      * 用户名
      */
-    @NotBlank(message = "用户名不能为空", groups = {AddGroup.class, UpdateGroup.class})
+    @NotNull(message = "用户名不能为空", groups = {AddGroup.class, UpdateGroup.class})
     private String username;
 
     /**
      * 密码
      */
-    @NotBlank(message = "密码不能为空", groups = AddGroup.class)
+    @NotNull(message = "密码不能为空", groups = AddGroup.class)
     private String password;
 
     /**
@@ -47,7 +47,7 @@ public class SysUserEntity implements Serializable {
     /**
      * 邮箱
      */
-    @NotBlank(message = "邮箱不能为空", groups = {AddGroup.class, UpdateGroup.class})
+    @NotNull(message = "邮箱不能为空", groups = {AddGroup.class, UpdateGroup.class})
     @Email(message = "邮箱格式不正确", groups = {AddGroup.class, UpdateGroup.class})
     private String email;
 

@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,7 +47,7 @@ public class ApiLoginController {
             @ApiImplicitParam(paramType = "query", dataType = "string", name = "mobile", value = "手机号", required = true),
             @ApiImplicitParam(paramType = "query", dataType = "string", name = "password", value = "密码", required = true)
     })
-    public Result login(String mobile, String password) {
+    public Flux<Result> login(String mobile, String password) {
         Assert.isBlank(mobile, "手机号不能为空");
         Assert.isBlank(password, "密码不能为空");
 
@@ -59,7 +60,7 @@ public class ApiLoginController {
         Map<String, Object> map = new HashMap<>(16);
         map.put("token", token);
         map.put("expire", jwtConfig.getExpire());
-        return Result.ok(map);
+        return Flux.just(Result.ok(map));
     }
 
 }

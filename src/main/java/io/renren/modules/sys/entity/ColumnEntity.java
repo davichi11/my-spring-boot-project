@@ -24,7 +24,6 @@ public class ColumnEntity {
      * 列名备注
      */
     private String comments;
-
     /**
      * 属性名称(第一个字母大写)，如：user_name => UserName
      */

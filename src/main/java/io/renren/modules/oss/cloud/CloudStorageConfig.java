@@ -4,7 +4,6 @@ import io.renren.common.validator.group.AliyunGroup;
 import io.renren.common.validator.group.QcloudGroup;
 import io.renren.common.validator.group.QiniuGroup;
 import lombok.Data;
-import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.URL;
 
@@ -27,7 +26,7 @@ public class CloudStorageConfig implements Serializable {
     private Integer type;
 
     //七牛绑定的域名
-    @NotBlank(message = "七牛绑定的域名不能为空", groups = QiniuGroup.class)
+    @NotNull(message = "七牛绑定的域名不能为空", groups = QiniuGroup.class)
     @URL(message = "七牛绑定的域名格式不正确", groups = QiniuGroup.class)
     private String qiniuDomain;
 
@@ -36,17 +35,17 @@ public class CloudStorageConfig implements Serializable {
      */
     private String qiniuPrefix;
     //七牛ACCESS_KEY
-    @NotBlank(message = "七牛AccessKey不能为空", groups = QiniuGroup.class)
+    @NotNull(message = "七牛AccessKey不能为空", groups = QiniuGroup.class)
     private String qiniuAccessKey;
     //七牛SECRET_KEY
-    @NotBlank(message = "七牛SecretKey不能为空", groups = QiniuGroup.class)
+    @NotNull(message = "七牛SecretKey不能为空", groups = QiniuGroup.class)
     private String qiniuSecretKey;
     //七牛存储空间名
-    @NotBlank(message = "七牛空间名不能为空", groups = QiniuGroup.class)
+    @NotNull(message = "七牛空间名不能为空", groups = QiniuGroup.class)
     private String qiniuBucketName;
 
     //阿里云绑定的域名
-    @NotBlank(message = "阿里云绑定的域名不能为空", groups = AliyunGroup.class)
+    @NotNull(message = "阿里云绑定的域名不能为空", groups = AliyunGroup.class)
     @URL(message = "阿里云绑定的域名格式不正确", groups = AliyunGroup.class)
     private String aliyunDomain;
     /**
@@ -54,20 +53,20 @@ public class CloudStorageConfig implements Serializable {
      */
     private String aliyunPrefix;
     //阿里云EndPoint
-    @NotBlank(message = "阿里云EndPoint不能为空", groups = AliyunGroup.class)
+    @NotNull(message = "阿里云EndPoint不能为空", groups = AliyunGroup.class)
     private String aliyunEndPoint;
     //阿里云AccessKeyId
-    @NotBlank(message = "阿里云AccessKeyId不能为空", groups = AliyunGroup.class)
+    @NotNull(message = "阿里云AccessKeyId不能为空", groups = AliyunGroup.class)
     private String aliyunAccessKeyId;
     //阿里云AccessKeySecret
-    @NotBlank(message = "阿里云AccessKeySecret不能为空", groups = AliyunGroup.class)
+    @NotNull(message = "阿里云AccessKeySecret不能为空", groups = AliyunGroup.class)
     private String aliyunAccessKeySecret;
     //阿里云BucketName
-    @NotBlank(message = "阿里云BucketName不能为空", groups = AliyunGroup.class)
+    @NotNull(message = "阿里云BucketName不能为空", groups = AliyunGroup.class)
     private String aliyunBucketName;
 
     //腾讯云绑定的域名
-    @NotBlank(message = "腾讯云绑定的域名不能为空", groups = QcloudGroup.class)
+    @NotNull(message = "腾讯云绑定的域名不能为空", groups = QcloudGroup.class)
     @URL(message = "腾讯云绑定的域名格式不正确", groups = QcloudGroup.class)
     private String qcloudDomain;
 
@@ -79,16 +78,16 @@ public class CloudStorageConfig implements Serializable {
     @NotNull(message = "腾讯云AppId不能为空", groups = QcloudGroup.class)
     private Integer qcloudAppId;
     //腾讯云SecretId
-    @NotBlank(message = "腾讯云SecretId不能为空", groups = QcloudGroup.class)
+    @NotNull(message = "腾讯云SecretId不能为空", groups = QcloudGroup.class)
     private String qcloudSecretId;
     //腾讯云SecretKey
-    @NotBlank(message = "腾讯云SecretKey不能为空", groups = QcloudGroup.class)
+    @NotNull(message = "腾讯云SecretKey不能为空", groups = QcloudGroup.class)
     private String qcloudSecretKey;
     //腾讯云BucketName
-    @NotBlank(message = "腾讯云BucketName不能为空", groups = QcloudGroup.class)
+    @NotNull(message = "腾讯云BucketName不能为空", groups = QcloudGroup.class)
     private String qcloudBucketName;
     //腾讯云COS所属地区
-    @NotBlank(message = "所属地区不能为空", groups = QcloudGroup.class)
+    @NotNull(message = "所属地区不能为空", groups = QcloudGroup.class)
     private String qcloudRegion;
 
 }

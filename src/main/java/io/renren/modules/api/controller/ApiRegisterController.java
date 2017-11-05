@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
 
 /**
  * 注册
@@ -40,7 +41,7 @@ public class ApiRegisterController {
             @ApiImplicitParam(paramType = "query", dataType = "string", name = "mobile", value = "手机号", required = true),
             @ApiImplicitParam(paramType = "query", dataType = "string", name = "password", value = "密码", required = true)
     })
-    public Result register(String mobile, String password) {
+    public Flux<Result> register(String mobile, String password) {
         Assert.isBlank(mobile, "手机号不能为空");
         Assert.isBlank(password, "密码不能为空");
 
@@ -48,9 +49,9 @@ public class ApiRegisterController {
             userService.save(mobile, password);
         } catch (Exception e) {
             log.error("注册异常", e);
-            return Result.error("注册异常");
+            return Flux.just(Result.error("注册异常"));
         }
 
-        return Result.ok();
+        return Flux.just(Result.ok());
     }
 }
