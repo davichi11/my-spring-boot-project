@@ -25,9 +25,10 @@ public class MyTest {
 //        int sum = stringList.stream().filter(Objects::nonNull).distinct().mapToInt(NumberUtils::toInt).filter(i -> i % 2 == 0).sum();
 //        System.out.println(sum);
 
-        for (long i = 0; i < 50; i++) {
-            System.out.println(fib(i));
-        }
+//        for (long i = 0; i < 50; i++) {
+//            System.out.println(fib(i));
+//        }
+
     }
 
     private boolean testString(int i) {

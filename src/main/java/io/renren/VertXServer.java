@@ -39,6 +39,10 @@ public class VertXServer extends AbstractVerticle {
         this.vertx.createHttpServer().requestHandler(router::accept).listen(this.port);
     }
 
+    private void xssHandler() {
+        this.router.route().blockingHandler();
+    }
+
     private void httpFailureHandler() {
         this.router.route().failureHandler(this.failureHandler::httpFailureHandler);
     }

@@ -1,6 +1,5 @@
 package io.renren.config;
 
-import io.renren.modules.sys.oauth2.OAuth2Filter;
 import io.renren.modules.sys.oauth2.OAuth2Realm;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.SessionManager;
@@ -13,8 +12,6 @@ import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreato
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.servlet.Filter;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -52,9 +49,9 @@ public class ShiroConfig {
         shiroFilter.setSecurityManager(securityManager);
 
         //oauth过滤
-        Map<String, Filter> filters = new HashMap<>(16);
-        filters.put("oauth2", new OAuth2Filter());
-        shiroFilter.setFilters(filters);
+//        Map<String, Filter> filters = new HashMap<>(16);
+//        filters.put("oauth2", new OAuth2Filter());
+//        shiroFilter.setFilters(filters);
 
         Map<String, String> filterMap = new LinkedHashMap<>();
         filterMap.put("/webjars/**", "anon");
