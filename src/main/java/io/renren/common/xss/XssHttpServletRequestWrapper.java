@@ -5,6 +5,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
+import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -55,6 +56,21 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
         final ByteArrayInputStream bis = new ByteArrayInputStream(json.getBytes("utf-8"));
         return new ServletInputStream() {
             @Override
+            public boolean isFinished() {
+                return false;
+            }
+
+            @Override
+            public boolean isReady() {
+                return false;
+            }
+
+            @Override
+            public void setReadListener(ReadListener readListener) {
+
+            }
+
+            @Override
             public int read() throws IOException {
                 return bis.read();
             }
@@ -83,11 +99,9 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
     @Override
     public Map<String, String[]> getParameterMap() {
-        Map<String, String[]> map = new LinkedHashMap<>();
         Map<String, String[]> parameters = super.getParameterMap();
         parameters.forEach((s, strings) -> Arrays.stream(strings).forEach(this::xssEncode));
-        map.putAll(parameters);
-        return map;
+        return new LinkedHashMap<>(parameters);
     }
 
     @Override
