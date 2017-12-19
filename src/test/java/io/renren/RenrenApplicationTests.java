@@ -17,6 +17,7 @@ public class RenrenApplicationTests {
     @Test
     public void contextLoads() {
         userService.queryList(Maps.newHashMap()).forEach(System.out::println);
+
     }
 
 }

@@ -21,9 +21,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @Configuration
 @EnableSwagger2
-public class ApiMain {
+public class Swagger2 {
     @Bean
-    public Docket config() {
+    public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .useDefaultResponseMessages(false)
@@ -35,8 +35,8 @@ public class ApiMain {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("API文档").description("api根地址：http://localhost:8088/")
-                .contact(new Contact("ChunLiang Hu","",""))
+                .title("API文档").description("api根地址：http://localhost:8088/").termsOfServiceUrl("http://localhost:8088/")
+                .contact(new Contact("ChunLiang Hu","","")).version("1.0")
                 .build();
     }
 }
