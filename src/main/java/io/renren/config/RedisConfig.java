@@ -20,8 +20,12 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  */
 @Configuration
 public class RedisConfig {
+    private final RedisConnectionFactory factory;
+
     @Autowired
-    private RedisConnectionFactory factory;
+    public RedisConfig(RedisConnectionFactory factory) {
+        this.factory = factory;
+    }
 
     @Bean
     public RedisTemplate<String, Object> redisTemplate() {

@@ -4,11 +4,9 @@ package io.renren.modules.api.controller;
 import io.renren.common.utils.Result;
 import io.renren.common.validator.Assert;
 import io.renren.modules.api.annotation.AuthIgnore;
+import io.renren.modules.api.entity.UserEntity;
 import io.renren.modules.api.service.UserService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,10 +38,16 @@ public class ApiRegisterController {
             @ApiImplicitParam(paramType = "query", dataType = "string", name = "mobile", value = "手机号", required = true),
             @ApiImplicitParam(paramType = "query", dataType = "string", name = "password", value = "密码", required = true)
     })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "注册成功"),
+            @ApiResponse(code = 500, message = "注册失败")})
     public Result register(String mobile, String password) {
         Assert.isBlank(mobile, "手机号不能为空");
         Assert.isBlank(password, "密码不能为空");
-
+        UserEntity userEntity = userService.queryByMobile(mobile);
+        if (userEntity != null) {
+            return Result.error("用户已注册");
+        }
         try {
             userService.save(mobile, password);
         } catch (Exception e) {

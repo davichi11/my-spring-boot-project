@@ -22,7 +22,6 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * @create 2017/7/28-07:45
  */
 @SuppressWarnings("unchecked")
-//@Component
 public class RedisCache implements Cache {
 
 //    @Autowired
