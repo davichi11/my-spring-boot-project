@@ -53,7 +53,7 @@ public class MyTest {
 
     @Test
     public void testPath() {
-        System.out.println(GenUtils.getClasspath());
+        System.out.println(GenUtils.INSTANCE.getClasspath());
     }
 
     @Test
