@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController
 import java.io.File
 import java.io.IOException
 import java.time.LocalDateTime
-import javax.servlet.http.HttpServletRequest
 
 /**
  * @author ChunLiang Hu
@@ -57,8 +56,7 @@ class SysGeneratorController @Autowired constructor(private val sysGeneratorServ
      */
     @GetMapping("/code")
     @Throws(IOException::class)
-    fun code(request: HttpServletRequest): Result {
-        val tables = request.getParameter("tables")
+    fun code(tables: String): Result {
         val tableNames = tables.split(",").toTypedArray()
         try {
             val data: ByteArray = sysGeneratorService.generatorCode(tableNames)

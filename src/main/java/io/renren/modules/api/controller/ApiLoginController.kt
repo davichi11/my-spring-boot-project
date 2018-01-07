@@ -28,7 +28,7 @@ import java.util.*
 @RestController
 @RequestMapping("/api")
 @Api("登录接口")
-class ApiLoginController @Autowired constructor(private val userService: UserService) {
+class ApiLoginController @Autowired constructor(private val userService: UserService,private val jwtConfig:JWTConfig) {
 
     /**
      * 登录
@@ -36,7 +36,8 @@ class ApiLoginController @Autowired constructor(private val userService: UserSer
     @AuthIgnore
     @PostMapping("login")
     @ApiOperation(value = "登录", notes = "登录说明")
-    @ApiImplicitParams(ApiImplicitParam(paramType = "query", dataType = "string", name = "mobile", value = "手机号", required = true), ApiImplicitParam(paramType = "query", dataType = "string", name = "password", value = "密码", required = true))
+    @ApiImplicitParams(ApiImplicitParam(paramType = "query", dataType = "string", name = "mobile", value = "手机号", required = true),
+            ApiImplicitParam(paramType = "query", dataType = "string", name = "password", value = "密码", required = true))
     fun login(mobile: String, password: String): Result {
         Assert.isBlank(mobile, "手机号不能为空")
         Assert.isBlank(password, "密码不能为空")
@@ -45,11 +46,11 @@ class ApiLoginController @Autowired constructor(private val userService: UserSer
         val userId = userService.login(mobile, password)
 
         //生成token
-        val token = JWTConfig().generateToken(userId)
+        val token = jwtConfig.generateToken(userId)
 
         val map = HashMap<String, Any>(16)
         map.put("token", token)
-        map.put("expire", JWTConfig().expire)
+        map.put("expire", jwtConfig.expire)
         return Result().ok(map)
     }
 

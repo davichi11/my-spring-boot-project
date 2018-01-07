@@ -43,9 +43,9 @@ class AuthorizationInterceptor : HandlerInterceptorAdapter() {
 
         //从header中获取token,如果header中不存在token，则从参数中获取token
         val token = if (StringUtils.isBlank(request!!.getHeader(jwtConfig!!.header)))
-            request.getParameter(jwtConfig.header)
+            request.getParameter(jwtConfig!!.header)
         else
-            request.getHeader(jwtConfig.header)
+            request.getHeader(jwtConfig!!.header)
 
 
         //token为空
@@ -53,9 +53,9 @@ class AuthorizationInterceptor : HandlerInterceptorAdapter() {
             throw RRException("token不能为空")
         }
 
-        val claims = jwtConfig.getClaimByToken(token)
-        if (claims == null || jwtConfig.isTokenExpired(LocalDateTime.from(claims.expiration.toInstant()))) {
-            throw RRException(jwtConfig.header!! + "失效，请重新登录", HttpStatus.UNAUTHORIZED.value())
+        val claims = jwtConfig!!.getClaimByToken(token)
+        if (claims == null || jwtConfig!!.isTokenExpired(LocalDateTime.from(claims.expiration.toInstant()))) {
+            throw RRException(jwtConfig!!.header!! + "失效，请重新登录", HttpStatus.UNAUTHORIZED.value())
         }
 
         //设置userId到request里，后续根据userId，获取用户信息

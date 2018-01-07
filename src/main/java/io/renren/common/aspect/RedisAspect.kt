@@ -26,7 +26,7 @@ class RedisAspect {
      * 是否开启redis缓存  true开启   false关闭
      */
     @Value("\${spring.redis.open: true}")
-    private val open: Boolean = false
+    private var open: Boolean = false
 
     @Around("execution(* io.renren.common.cache.RedisCache.*(..))")
     @Throws(Throwable::class)

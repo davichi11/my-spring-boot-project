@@ -29,7 +29,9 @@ import javax.servlet.http.HttpServletResponse
  */
 @RestController
 class SysLoginController @Autowired constructor(private val producer: Producer, private val sysUserService: SysUserService,
-                                                private val sysUserTokenService: SysUserTokenService, private val captcha: OpenCaptcha) {
+                                                private val sysUserTokenService: SysUserTokenService) {
+    @Autowired
+    private val cap: OpenCaptcha? = null
     private val log = LoggerFactory.getLogger(SysLoginController::class.java)
 
     @RequestMapping("captcha.jpg")
@@ -59,7 +61,7 @@ class SysLoginController @Autowired constructor(private val producer: Producer, 
     @Throws(IOException::class)
     fun login(username: String, password: String, captcha: String): Map<String, Any> {
         //是否开启验证码
-        if (BooleanUtils.toBoolean(this.captcha.isOpen)) {
+        if (BooleanUtils.toBoolean(cap!!.isOpen)) {
             val kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY)
             if (!captcha.equals(kaptcha, ignoreCase = true)) {
                 return Result().error(msg = "验证码不正确")
