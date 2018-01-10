@@ -24,13 +24,13 @@ object ValidatorUtils {
     /**
      * 校验对象
      *
-     * @param object 待校验对象
+     * @param `object` 待校验对象
      * @param groups 待校验的组
      * @throws RRException 校验不通过，则报RRException异常
      */
     @Throws(RRException::class)
-    fun validateEntity(`object`: Any, vararg groups: Class<*>) {
-        val constraintViolations = validator!!.validate(`object`, *groups)
+    fun validateEntity(any: Any, vararg groups: Class<*>) {
+        val constraintViolations = validator!!.validate(any, *groups)
         if (!constraintViolations.isEmpty()) {
             val constraint = constraintViolations.iterator().next()
             throw RRException(constraint.message)

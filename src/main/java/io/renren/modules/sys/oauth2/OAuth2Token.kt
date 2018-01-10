@@ -10,13 +10,13 @@ import org.apache.shiro.authc.AuthenticationToken
  * @email davichi2009@gmail.com
  * @date 2017-05-20 13:22
  */
-class OAuth2Token(private val token: String) : AuthenticationToken {
+class OAuth2Token(private val token: String?) : AuthenticationToken {
 
-    override fun getPrincipal(): String {
+    override fun getPrincipal(): String? {
         return token
     }
 
-    override fun getCredentials(): Any {
+    override fun getCredentials(): Any? {
         return token
     }
 }

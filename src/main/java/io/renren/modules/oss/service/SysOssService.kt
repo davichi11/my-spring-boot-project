@@ -16,7 +16,7 @@ interface SysOssService {
      * @param id
      * @return
      */
-    fun queryObject(id: Long?): SysOssEntity
+    fun queryObject(id: Long): SysOssEntity
 
     /**
      * 列表查询
@@ -59,7 +59,7 @@ interface SysOssService {
      * @throws Exception
      */
     @Throws(Exception::class)
-    fun delete(id: Long?)
+    fun delete(id: Long)
 
     /**
      * 批量删除

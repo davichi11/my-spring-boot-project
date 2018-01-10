@@ -18,7 +18,7 @@ interface SysUserDao : BaseDao<SysUserEntity> {
      *
      * @param userId 用户ID
      */
-    fun queryAllPerms(userId: Long?): MutableList<String>
+    fun queryAllPerms(userId: Long?): MutableList<String?>
 
     /**
      * 查询用户的所有菜单ID

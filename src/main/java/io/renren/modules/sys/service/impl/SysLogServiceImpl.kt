@@ -17,8 +17,8 @@ import java.time.LocalDateTime
 @Service("sysLogService")
 class SysLogServiceImpl @Autowired constructor(private val sysLogDao: SysLogDao) : SysLogService {
 
-    override fun queryObject(id: Long?): SysLogEntity {
-        return sysLogDao.queryObject(id!!)
+    override fun queryObject(id: Long): SysLogEntity {
+        return sysLogDao.queryObject(id)
     }
 
     override fun queryList(map: Map<String, Any>): List<SysLogEntity> {
@@ -43,8 +43,8 @@ class SysLogServiceImpl @Autowired constructor(private val sysLogDao: SysLogDao)
 
     @Transactional(rollbackFor = [(Exception::class)])
     @Throws(Exception::class)
-    override fun delete(id: Long?) {
-        sysLogDao.delete(id!!)
+    override fun delete(id: Long) {
+        sysLogDao.delete(id)
     }
 
     @Transactional(rollbackFor = [(Exception::class)])
@@ -64,10 +64,10 @@ class SysLogServiceImpl @Autowired constructor(private val sysLogDao: SysLogDao)
      * @throws Exception
      */
     override fun saveErrorLog(params: String) {
-        val logEntity = SysLogEntity()
-        logEntity.createDate = LocalDateTime.now()
         //获取request
         val request = HttpContextUtils.httpServletRequest
+        val logEntity = SysLogEntity()
+        logEntity.createDate = LocalDateTime.now()
         //设置IP地址
         logEntity.ip = IPUtils.getIpAddr(request)
         logEntity.params = params

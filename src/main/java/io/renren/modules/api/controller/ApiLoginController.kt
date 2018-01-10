@@ -42,7 +42,7 @@ class ApiLoginController @Autowired constructor(private val userService: UserSer
         Assert.isBlank(mobile, "手机号不能为空")
         Assert.isBlank(password, "密码不能为空")
         //用户登录
-        val userId = userService.login(mobile, password)
+        val userId = userService.login(mobile, password) ?: return Result().error(500,"手机号或密码错误")
 
         //生成token
         val token = jwtConfig.generateToken(userId)

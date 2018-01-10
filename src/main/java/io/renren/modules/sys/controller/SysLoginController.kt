@@ -59,11 +59,11 @@ class SysLoginController @Autowired constructor(private val producer: Producer, 
      */
     @RequestMapping(value = ["/sys/login"], method = [(RequestMethod.POST)])
     @Throws(IOException::class)
-    fun login(username: String, password: String, captcha: String): Map<String, Any> {
+    fun login(username: String, password: String, inCaptcha: String?): Map<String, Any> {
         //是否开启验证码
         if (BooleanUtils.toBoolean(cap!!.isOpen)) {
-            val kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY)
-            if (!captcha.equals(kaptcha, ignoreCase = true)) {
+            val captcha = ShiroUtils.getCaptcha(Constants.KAPTCHA_SESSION_KEY)
+            if (inCaptcha == null || captcha.toLowerCase() != inCaptcha.toLowerCase()) {
                 return Result().error(msg = "验证码不正确")
             }
         }

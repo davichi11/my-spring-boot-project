@@ -50,14 +50,14 @@ class OAuth2Realm @Autowired constructor(private val shiroService: ShiroService)
 
         //根据accessToken，查询用户信息
         val tokenEntity = shiroService.queryByToken(accessToken)
-        val expireTime = if (tokenEntity == null) 0 else tokenEntity.expireTime!!.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+        val expireTime = tokenEntity.expireTime!!.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
         //token失效
-        if (tokenEntity == null || expireTime < Instant.now().toEpochMilli()) {
+        if (tokenEntity.userId == null || expireTime < Instant.now().toEpochMilli()) {
             throw IncorrectCredentialsException("token失效，请重新登录")
         }
 
         //查询用户信息
-        val user = shiroService.queryUser(tokenEntity.userId)
+        val user = shiroService.queryUser(tokenEntity.userId!!)
         //账号锁定
         if (user.status == 0) {
             throw LockedAccountException("账号已被锁定,请联系管理员")

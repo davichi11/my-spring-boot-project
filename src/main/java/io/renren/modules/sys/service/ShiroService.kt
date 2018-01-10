@@ -23,5 +23,5 @@ interface ShiroService {
      *
      * @param userId
      */
-    fun queryUser(userId: Long?): SysUserEntity
+    fun queryUser(userId: Long): SysUserEntity
 }

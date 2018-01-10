@@ -42,6 +42,9 @@ class ScheduleJobController @Autowired constructor(private val scheduleJobServic
     @RequestMapping("/info/{jobId}")
     @RequiresPermissions("sys:schedule:info")
     fun info(@PathVariable("jobId") jobId: Long?): Result {
+        if (jobId == null) {
+            return Result().error(500,"id不能为空")
+        }
         val schedule = scheduleJobService.queryObject(jobId)
 
         return Result().ok().put("schedule", schedule)

@@ -27,11 +27,11 @@ import java.util.*
 class SysUserServiceImpl @Autowired constructor(private val sysUserDao: SysUserDao, private val sysUserRoleService: SysUserRoleService,
                                                 private val sysRoleDao: SysRoleDao) : SysUserService {
 
-    override fun queryAllPerms(userId: Long?): List<String> {
+    override fun queryAllPerms(userId: Long): List<String> {
         return sysUserDao.queryAllPerms(userId)
     }
 
-    override fun queryAllMenuId(userId: Long?): List<Long> {
+    override fun queryAllMenuId(userId: Long): List<Long> {
         return sysUserDao.queryAllMenuId(userId)
     }
 
@@ -39,8 +39,8 @@ class SysUserServiceImpl @Autowired constructor(private val sysUserDao: SysUserD
         return sysUserDao.queryByUserName(username)
     }
 
-    override fun queryObject(userId: Long?): SysUserEntity {
-        return sysUserDao.queryObject(userId!!)
+    override fun queryObject(userId: Long): SysUserEntity {
+        return sysUserDao.queryObject(userId)
     }
 
     override fun queryList(map: Map<String, Any>): List<SysUserEntity> {
@@ -91,9 +91,9 @@ class SysUserServiceImpl @Autowired constructor(private val sysUserDao: SysUserD
         sysUserDao.deleteBatch(userIds)
     }
 
-    override fun updatePassword(userId: Long?, password: String, newPassword: String): Int {
+    override fun updatePassword(userId: Long, password: String, newPassword: String): Int {
         val map = HashMap<String, Any>(16)
-        map.put("userId", userId!!)
+        map.put("userId", userId)
         map.put("password", password)
         map.put("newPassword", newPassword)
         return sysUserDao.updatePassword(map)

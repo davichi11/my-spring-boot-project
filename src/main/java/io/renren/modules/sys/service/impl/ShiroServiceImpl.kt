@@ -15,7 +15,7 @@ class ShiroServiceImpl @Autowired constructor(private val sysMenuDao: SysMenuDao
                                               private val sysUserTokenDao: SysUserTokenDao) : ShiroService {
 
     override fun getUserPermissions(userId: Long): MutableSet<String> {
-        var permsList: MutableList<String> = mutableListOf()
+        var permsList: MutableList<String?> = mutableListOf()
 
         //系统管理员，拥有最高权限
         if (userId == Constant.SUPER_ADMIN.toLong()) {
@@ -26,7 +26,7 @@ class ShiroServiceImpl @Autowired constructor(private val sysMenuDao: SysMenuDao
         }
         //用户权限列表
         val permsSet = mutableSetOf<String>()
-        permsList.filter { it.isNotBlank() }
+        permsList.filterNotNull()
                 .map { perms -> perms.trim().split(",") }
                 .forEach { permsSet.addAll(it) }
         return permsSet
@@ -36,7 +36,7 @@ class ShiroServiceImpl @Autowired constructor(private val sysMenuDao: SysMenuDao
         return sysUserTokenDao.queryByToken(token)
     }
 
-    override fun queryUser(userId: Long?): SysUserEntity {
-        return sysUserDao.queryObject(userId!!)
+    override fun queryUser(userId: Long): SysUserEntity {
+        return sysUserDao.queryObject(userId)
     }
 }

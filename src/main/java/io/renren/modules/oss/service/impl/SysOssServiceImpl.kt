@@ -13,8 +13,8 @@ import org.springframework.transaction.annotation.Transactional
 @Service("sysOssService")
 class SysOssServiceImpl @Autowired constructor(private val sysOssDao: SysOssDao) : SysOssService {
 
-    override fun queryObject(id: Long?): SysOssEntity {
-        return sysOssDao.queryObject(id!!)
+    override fun queryObject(id: Long): SysOssEntity {
+        return sysOssDao.queryObject(id)
     }
 
     override fun queryList(map: Map<String, Any>): List<SysOssEntity> {
@@ -39,8 +39,8 @@ class SysOssServiceImpl @Autowired constructor(private val sysOssDao: SysOssDao)
 
     @Transactional(rollbackFor = [(Exception::class)])
     @Throws(Exception::class)
-    override fun delete(id: Long?) {
-        sysOssDao.delete(id!!)
+    override fun delete(id: Long) {
+        sysOssDao.delete(id)
     }
 
     @Transactional(rollbackFor = [(Exception::class)])

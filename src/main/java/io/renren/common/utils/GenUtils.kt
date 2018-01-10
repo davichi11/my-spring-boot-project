@@ -89,12 +89,12 @@ object GenUtils {
 
         //列信息
         val columsList = ArrayList<ColumnEntity>()
-        columns.forEach { column: Map<String, String> ->
+        columns.forEach {
             val columnEntity = ColumnEntity()
-            columnEntity.columnName = column["columnName"].toString()
-            columnEntity.dataType = column["dataType"].toString()
-            columnEntity.comments = column["columnComment"].toString()
-            columnEntity.extra = column["extra"].toString()
+            columnEntity.columnName = it["columnName"].toString()
+            columnEntity.dataType = it["dataType"].toString()
+            columnEntity.comments = it["columnComment"].toString()
+            columnEntity.extra = it["extra"].toString()
             //列名转换成Java属性名
             val attrName = columnToJava(columnEntity.columnName)
             columnEntity.upAttrName = attrName
@@ -103,7 +103,7 @@ object GenUtils {
             val attrType = config.getString(columnEntity.dataType, "unknowType")
             columnEntity.attrType = attrType
             //是否主键
-            if ("PRI".equals(column["columnKey"], ignoreCase = true) && tableEntity.pk == null) {
+            if ("PRI".equals(it["columnKey"], ignoreCase = true) && tableEntity.pk == null) {
                 tableEntity.pk = columnEntity
             }
             columsList.add(columnEntity)

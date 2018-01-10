@@ -18,7 +18,7 @@ interface SysUserService {
      * @param userId 用户ID
      * @return
      */
-    fun queryAllPerms(userId: Long?): List<String>
+    fun queryAllPerms(userId: Long): List<String>
 
     /**
      * 查询用户的所有菜单ID
@@ -26,7 +26,7 @@ interface SysUserService {
      * @param userId
      * @return
      */
-    fun queryAllMenuId(userId: Long?): List<Long>
+    fun queryAllMenuId(userId: Long): List<Long>
 
     /**
      * 根据用户名，查询系统用户
@@ -42,7 +42,7 @@ interface SysUserService {
      * @param userId
      * @return
      */
-    fun queryObject(userId: Long?): SysUserEntity
+    fun queryObject(userId: Long): SysUserEntity
 
     /**
      * 查询用户列表
@@ -97,5 +97,5 @@ interface SysUserService {
      * @throws Exception
      */
     @Throws(Exception::class)
-    fun updatePassword(userId: Long?, password: String, newPassword: String): Int
+    fun updatePassword(userId: Long, password: String, newPassword: String): Int
 }

@@ -26,7 +26,7 @@ class ScheduleJobServiceImpl @Autowired constructor(private val scheduler: Sched
      */
     @PostConstruct
     fun init() {
-        val scheduleJobList = schedulerJobDao.queryList(HashMap(16))
+        val scheduleJobList = schedulerJobDao.queryList(mapOf())
         //如果不存在，则创建
         scheduleJobList.forEach { scheduleJob ->
             val cronTrigger = ScheduleUtils.getCronTrigger(scheduler, scheduleJob.jobId)
@@ -38,8 +38,8 @@ class ScheduleJobServiceImpl @Autowired constructor(private val scheduler: Sched
         }
     }
 
-    override fun queryObject(jobId: Long?): ScheduleJobEntity {
-        return schedulerJobDao.queryObject(jobId!!)
+    override fun queryObject(jobId: Long): ScheduleJobEntity {
+        return schedulerJobDao.queryObject(jobId)
     }
 
     override fun queryList(map: Map<String, Any>): List<ScheduleJobEntity> {
@@ -71,9 +71,9 @@ class ScheduleJobServiceImpl @Autowired constructor(private val scheduler: Sched
     @Transactional(rollbackFor = [(Exception::class)])
     @Throws(Exception::class)
     override fun deleteBatch(jobIds: Array<Long>) {
-        Arrays.stream(jobIds).forEachOrdered { jobId ->
+        jobIds.forEach {
             try {
-                ScheduleUtils.deleteScheduleJob(scheduler, jobId)
+                ScheduleUtils.deleteScheduleJob(scheduler, it)
             } catch (e: SchedulerException) {
                 throw RRException("删除定时任务失败")
             }
@@ -91,9 +91,9 @@ class ScheduleJobServiceImpl @Autowired constructor(private val scheduler: Sched
     }
 
     override fun run(jobIds: Array<Long>) {
-        Arrays.stream(jobIds).forEach { jobId ->
+        jobIds.forEach {
             try {
-                ScheduleUtils.run(scheduler, queryObject(jobId))
+                ScheduleUtils.run(scheduler, queryObject(it))
             } catch (e: Exception) {
                 throw RRException("立即执行任务失败")
             }
@@ -101,9 +101,9 @@ class ScheduleJobServiceImpl @Autowired constructor(private val scheduler: Sched
     }
 
     override fun pause(jobIds: Array<Long>) {
-        Arrays.stream(jobIds).forEach { jobId ->
+        jobIds.forEach {
             try {
-                ScheduleUtils.pauseJob(scheduler, jobId)
+                ScheduleUtils.pauseJob(scheduler, it)
             } catch (e: Exception) {
                 throw RRException("暂停定时任务失败")
             }
@@ -113,9 +113,9 @@ class ScheduleJobServiceImpl @Autowired constructor(private val scheduler: Sched
     }
 
     override fun resume(jobIds: Array<Long>) {
-        Arrays.stream(jobIds).forEach { jobId ->
+        jobIds.forEach {
             try {
-                ScheduleUtils.resumeJob(scheduler, jobId)
+                ScheduleUtils.resumeJob(scheduler, it)
             } catch (e: SchedulerException) {
                 throw RRException("恢复定时任务失败")
             }

@@ -5,7 +5,6 @@ import io.renren.modules.sys.entity.SysUserEntity
 import org.apache.shiro.SecurityUtils
 import org.apache.shiro.session.Session
 import org.apache.shiro.subject.Subject
-import java.util.*
 
 /**
  * Shiro工具类
@@ -31,17 +30,17 @@ object ShiroUtils {
     val isLogin: Boolean
         get() = SecurityUtils.getSubject().principal != null
 
-    fun getKaptcha(key: String): String {
-        val kaptcha = Optional.ofNullable(getSessionAttribute(key)).orElseThrow { RRException("验证码已失效") }
+    fun getCaptcha(key: String): String {
+        val captcha = getSessionAttribute(key) ?: throw RRException("验证码已失效")
         session.removeAttribute(key)
-        return kaptcha.toString()
+        return captcha.toString()
     }
 
     fun setSessionAttribute(key: Any, value: Any) {
         session.setAttribute(key, value)
     }
 
-    fun getSessionAttribute(key: Any): Any {
+    fun getSessionAttribute(key: Any): Any? {
         return session.getAttribute(key)
     }
 

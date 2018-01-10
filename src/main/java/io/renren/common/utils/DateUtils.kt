@@ -35,7 +35,7 @@ object DateUtils {
      */
     @JvmOverloads
     fun format(date: LocalDate, pattern: String = DATE_PATTERN): String {
-        return Optional.ofNullable(date).map { localDate -> localDate.format(DateTimeFormatter.ofPattern(pattern)) }.orElse("")
+        return date.format(DateTimeFormatter.ofPattern(pattern))
     }
 
     /**
@@ -48,7 +48,7 @@ object DateUtils {
     @JvmOverloads
     fun formatDateTime(dateTime: LocalDateTime, timePattern: String = DATE_TIME_PATTERN): String {
         val finalTimePattern = Optional.ofNullable(timePattern).orElse(DATE_TIME_PATTERN)
-        return Optional.ofNullable(dateTime).map { localDateTime -> localDateTime.format(DateTimeFormatter.ofPattern(finalTimePattern)) }.orElse("")
+        return dateTime.format(DateTimeFormatter.ofPattern(finalTimePattern))
     }
 
     /**

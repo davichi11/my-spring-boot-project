@@ -1,7 +1,6 @@
 package io.renren.modules.api.service.impl
 
 
-import io.renren.common.exception.RRException
 import io.renren.modules.api.dao.UserDao
 import io.renren.modules.api.entity.UserEntity
 import io.renren.modules.api.service.UserService
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
-import java.util.*
 
 
 @Service("userService")
@@ -57,13 +55,15 @@ class UserServiceImpl @Autowired constructor(private val userDao: UserDao) : Use
         userDao.deleteBatch(userIds)
     }
 
-    override fun queryByMobile(mobile: String): UserEntity {
+    override fun queryByMobile(mobile: String): UserEntity? {
         return userDao.queryByMobile(mobile)
     }
 
-    override fun login(mobile: String, password: String): Long {
-        val user = Optional.ofNullable(queryByMobile(mobile)).filter { u -> u.password == DigestUtils.sha256Hex(password) }
-                .orElseThrow { RRException("手机号或密码错误") }
-        return user.userId!!
+    override fun login(mobile: String, password: String): Long? {
+        val user = queryByMobile(mobile) ?: return null
+        return if (user.password == DigestUtils.sha256Hex(password))
+            user.userId
+        else
+            null
     }
 }

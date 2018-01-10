@@ -17,7 +17,7 @@ interface ScheduleJobService {
      * @param jobId
      * @return
      */
-    fun queryObject(jobId: Long?): ScheduleJobEntity
+    fun queryObject(jobId: Long): ScheduleJobEntity
 
     /**
      * 查询定时任务列表

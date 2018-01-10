@@ -13,9 +13,9 @@ import java.time.LocalDateTime
 
 
 @Service("sysUserTokenService")
-class SysUserTokenServiceImpl @Autowired constructor(private val sysUserTokenDao: SysUserTokenDao): SysUserTokenService {
+class SysUserTokenServiceImpl @Autowired constructor(private val sysUserTokenDao: SysUserTokenDao) : SysUserTokenService {
 
-    override fun queryByUserId(userId: Long?): SysUserTokenEntity {
+    override fun queryByUserId(userId: Long): SysUserTokenEntity {
         return sysUserTokenDao.queryByUserId(userId)
     }
 
@@ -47,25 +47,19 @@ class SysUserTokenServiceImpl @Autowired constructor(private val sysUserTokenDao
         val expireTime = LocalDateTime.now().plusDays(1)
 
         //判断是否生成过token
-        var tokenEntity: SysUserTokenEntity? = queryByUserId(userId)
-        if (tokenEntity == null) {
-            tokenEntity = SysUserTokenEntity()
-            tokenEntity.userId = userId
-            tokenEntity.token = token
-            tokenEntity.updateTime = now
-            tokenEntity.expireTime = expireTime
-            //保存token
-            save(tokenEntity)
-        } else {
-            tokenEntity.token = token
-            tokenEntity.updateTime = now
-            tokenEntity.expireTime = expireTime
-
-            //更新token
-            update(tokenEntity)
+        val tokenEntity: SysUserTokenEntity? = queryByUserId(userId)
+        when (tokenEntity) {
+            null -> //保存token
+                save(SysUserTokenEntity(1L, userId, token, expireTime, now))
+            else -> { //更新token
+                tokenEntity.token = token
+                tokenEntity.updateTime = now
+                tokenEntity.expireTime = expireTime
+                update(tokenEntity)
+            }
         }
 
-        return Result().ok().put("token", token!!).put("expire", EXPIRE)
+        return Result().ok().put("token", token).put("expire", EXPIRE)
     }
 
     companion object {

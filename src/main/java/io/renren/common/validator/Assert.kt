@@ -1,7 +1,6 @@
 package io.renren.common.validator
 
 import io.renren.common.exception.RRException
-import org.apache.commons.lang.StringUtils
 
 /**
  * 数据校验
@@ -13,7 +12,7 @@ import org.apache.commons.lang.StringUtils
 object Assert {
 
     fun isBlank(str: String, message: String) {
-        if (StringUtils.isBlank(str)) {
+        if (str.isBlank()) {
             throw RRException(message)
         }
     }

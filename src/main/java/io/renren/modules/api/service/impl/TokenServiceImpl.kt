@@ -6,36 +6,32 @@ import io.renren.modules.api.service.TokenService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.util.HashMap
-import java.util.UUID
+import java.util.*
 
 
 @Service("tokenService")
-class TokenServiceImpl : TokenService {
-    @Autowired
-    private val tokenDao: TokenDao? = null
+class TokenServiceImpl @Autowired constructor(private val tokenDao: TokenDao): TokenService {
 
     override fun queryByUserId(userId: Long?): TokenEntity {
-        return tokenDao!!.queryByUserId(userId)
+        return tokenDao.queryByUserId(userId)
     }
 
     override fun queryByToken(token: String): TokenEntity {
-        return tokenDao!!.queryByToken(token)
+        return tokenDao.queryByToken(token)
     }
 
     @Transactional(rollbackFor = arrayOf(Exception::class))
     @Throws(Exception::class)
     override fun save(token: TokenEntity) {
-        tokenDao!!.save(token)
+        tokenDao.save(token)
     }
 
     @Transactional(rollbackFor = arrayOf(Exception::class))
     @Throws(Exception::class)
     override fun update(token: TokenEntity) {
-        tokenDao!!.update(token)
+        tokenDao.update(token)
     }
 
     @Transactional(rollbackFor = arrayOf(Exception::class))
@@ -50,16 +46,10 @@ class TokenServiceImpl : TokenService {
         val expireTime = LocalDateTime.now().plusHours(12)
 
         //判断是否生成过token
-        var tokenEntity: TokenEntity? = queryByUserId(userId)
+        val tokenEntity: TokenEntity? = queryByUserId(userId)
         if (tokenEntity == null) {
-            tokenEntity = TokenEntity()
-            tokenEntity.userId = userId
-            tokenEntity.token = token
-            tokenEntity.updateTime = now
-            tokenEntity.expireTime = expireTime
-
             //保存token
-            save(tokenEntity)
+            save(TokenEntity(1L,userId,token,expireTime,now))
         } else {
             tokenEntity.token = token
             tokenEntity.updateTime = now

@@ -33,8 +33,8 @@ class LoginUserHandlerMethodArgumentResolver : HandlerMethodArgumentResolver {
     override fun resolveArgument(parameter: MethodParameter, container: ModelAndViewContainer,
                                  request: NativeWebRequest, factory: WebDataBinderFactory): Any? {
         //获取用户ID
-        val `object` = request.getAttribute(AuthorizationInterceptor.LOGIN_USER_KEY, RequestAttributes.SCOPE_REQUEST) ?: return null
+        val userId = request.getAttribute(AuthorizationInterceptor.LOGIN_USER_KEY, RequestAttributes.SCOPE_REQUEST) ?: return null
         //获取用户信息
-        return userService!!.queryObject(`object` as Long)
+        return userService!!.queryObject(userId as Long)
     }
 }

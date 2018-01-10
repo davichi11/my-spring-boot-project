@@ -33,9 +33,9 @@ object ScheduleUtils {
     /**
      * 获取表达式触发器
      */
-    fun getCronTrigger(scheduler: Scheduler, jobId: Long?): CronTrigger {
+    fun getCronTrigger(scheduler: Scheduler, jobId: Long?): CronTrigger? {
         try {
-            return scheduler.getTrigger(getTriggerKey(jobId)) as CronTrigger
+            return scheduler.getTrigger(getTriggerKey(jobId)) as? CronTrigger
         } catch (e: SchedulerException) {
             throw RRException("获取定时任务CronTrigger出现异常", e)
         }
@@ -84,10 +84,10 @@ object ScheduleUtils {
             val scheduleBuilder = CronScheduleBuilder.cronSchedule(scheduleJob.cronExpression!!)
                     .withMisfireHandlingInstructionDoNothing()
 
-            var trigger = getCronTrigger(scheduler, scheduleJob.jobId)
+            var trigger: CronTrigger? = getCronTrigger(scheduler, scheduleJob.jobId) ?: return
 
             //按新的cronExpression表达式重新构建trigger
-            trigger = trigger.triggerBuilder.withIdentity(triggerKey).withSchedule(scheduleBuilder).build()
+            trigger = trigger!!.triggerBuilder.withIdentity(triggerKey).withSchedule(scheduleBuilder).build()
 
             //参数
             trigger.jobDataMap.put(ScheduleJobEntity().JOB_PARAM_KEY, Gson().toJson(scheduleJob))

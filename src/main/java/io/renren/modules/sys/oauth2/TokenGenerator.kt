@@ -16,14 +16,11 @@ object TokenGenerator {
 
     private val HEX_CODE = "0123456789abcdef".toCharArray()
 
-    fun generateValue(): String? {
+    fun generateValue(): String {
         return generateValue(UUID.randomUUID().toString())
     }
 
-    private fun toHexString(data: ByteArray?): String? {
-        if (data == null) {
-            return null
-        }
+    private fun toHexString(data: ByteArray): String {
         val r = StringBuilder(data.size * 2)
         for (b in data) {
             r.append(HEX_CODE[b.toInt() shr 4 and 0xF])
@@ -32,7 +29,7 @@ object TokenGenerator {
         return r.toString()
     }
 
-    private fun generateValue(param: String): String? {
+    private fun generateValue(param: String): String {
         try {
             val algorithm = MessageDigest.getInstance("MD5")
             algorithm.reset()

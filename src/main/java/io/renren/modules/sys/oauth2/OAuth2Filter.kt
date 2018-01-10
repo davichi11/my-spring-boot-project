@@ -2,7 +2,6 @@ package io.renren.modules.sys.oauth2
 
 import com.google.gson.Gson
 import io.renren.common.utils.Result
-import org.apache.commons.lang.StringUtils
 import org.apache.http.HttpStatus
 import org.apache.shiro.authc.AuthenticationException
 import org.apache.shiro.authc.AuthenticationToken
@@ -27,7 +26,7 @@ class OAuth2Filter : AuthenticatingFilter() {
         //获取请求token
         val token = getRequestToken(request as HttpServletRequest)
 
-        return if (StringUtils.isBlank(token)) {
+        return if (token == null) {
             null
         } else OAuth2Token(token)
 
@@ -41,7 +40,7 @@ class OAuth2Filter : AuthenticatingFilter() {
     override fun onAccessDenied(request: ServletRequest, response: ServletResponse): Boolean {
         //获取请求token，如果token不存在，直接返回401
         val token = getRequestToken(request as HttpServletRequest)
-        if (StringUtils.isBlank(token)) {
+        if (token == null) {
             val httpResponse = response as HttpServletResponse
             val json = Gson().toJson(Result().error(HttpStatus.SC_UNAUTHORIZED, "invalid token"))
             httpResponse.writer.print(json)
@@ -70,7 +69,7 @@ class OAuth2Filter : AuthenticatingFilter() {
     /**
      * 获取请求的token
      */
-    private fun getRequestToken(httpRequest: HttpServletRequest): String {
+    private fun getRequestToken(httpRequest: HttpServletRequest): String? {
         //从header中获取token
         var token = httpRequest.getHeader("token")
 

@@ -13,7 +13,7 @@ import org.apache.ibatis.annotations.Mapper
 @Mapper
 interface SysUserTokenDao : BaseDao<SysUserTokenEntity> {
 
-    fun queryByUserId(userId: Long?): SysUserTokenEntity
+    fun queryByUserId(userId: Long): SysUserTokenEntity
 
     fun queryByToken(token: String): SysUserTokenEntity
 

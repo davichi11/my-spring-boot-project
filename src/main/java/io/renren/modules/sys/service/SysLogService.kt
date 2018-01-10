@@ -17,7 +17,7 @@ interface SysLogService {
      * @param id
      * @return
      */
-    fun queryObject(id: Long?): SysLogEntity
+    fun queryObject(id: Long): SysLogEntity
 
     /**
      * 日志列表
@@ -60,7 +60,7 @@ interface SysLogService {
      * @throws Exception
      */
     @Throws(Exception::class)
-    fun delete(id: Long?)
+    fun delete(id: Long)
 
     /**
      * 批量删除

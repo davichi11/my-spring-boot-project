@@ -35,7 +35,6 @@ class SysUserController @Autowired constructor(private val sysUserService: SysUs
     private val logger = LoggerFactory.getLogger(SysUserController::class.java)
 
 
-
     /**
      * 所有用户列表
      */
@@ -70,18 +69,18 @@ class SysUserController @Autowired constructor(private val sysUserService: SysUs
     @RequestMapping("/password")
     fun password(password: String, newPassword: String): Result {
         val user: SysUserEntity = SecurityUtils.getSubject().principal as SysUserEntity
-        var password = password
-        var newPassword = newPassword
+        var varPassword = password
+        var varNewPassword = newPassword
 
         //sha256加密
-        password = Sha256Hash(password, user.salt).toHex()
+        varPassword = Sha256Hash(varPassword, user.salt).toHex()
         //sha256加密
-        newPassword = Optional.ofNullable(newPassword).orElseThrow { RRException("新密码不为能空") }
+        varNewPassword = Optional.ofNullable(varNewPassword).orElseThrow { RRException("新密码不为能空") }
 
         //更新密码
         var count = 0
         try {
-            count = sysUserService.updatePassword(userId, password, newPassword)
+            count = sysUserService.updatePassword(user.userId!!, varPassword, varNewPassword)
         } catch (e: Exception) {
             logger.error("修改密码异常", e)
         }
@@ -98,6 +97,9 @@ class SysUserController @Autowired constructor(private val sysUserService: SysUs
     @RequestMapping("/info/{userId}")
     @RequiresPermissions("sys:user:info")
     fun info(@PathVariable("userId") userId: Long?): Result {
+        if (userId == null) {
+            return Result().error(500, "用户ID不能为空")
+        }
         val user = sysUserService.queryObject(userId)
 
         //获取用户所属的角色列表

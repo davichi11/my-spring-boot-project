@@ -78,7 +78,7 @@ interface UserService {
      * @param mobile
      * @return
      */
-    fun queryByMobile(mobile: String): UserEntity
+    fun queryByMobile(mobile: String): UserEntity?
 
     /**
      * 用户登录
@@ -87,6 +87,6 @@ interface UserService {
      * @param password 密码
      * @return 返回用户ID
      */
-    fun login(mobile: String, password: String): Long
+    fun login(mobile: String, password: String): Long?
 
 }
