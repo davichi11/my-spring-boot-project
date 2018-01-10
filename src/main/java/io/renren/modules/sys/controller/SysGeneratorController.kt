@@ -1,5 +1,6 @@
 package io.renren.modules.sys.controller
 
+import com.alibaba.fastjson.JSON
 import com.github.pagehelper.PageHelper
 import com.github.pagehelper.PageInfo
 import io.renren.common.utils.DateUtils
@@ -57,9 +58,9 @@ class SysGeneratorController @Autowired constructor(private val sysGeneratorServ
     @GetMapping("/code")
     @Throws(IOException::class)
     fun code(tables: String): Result {
-        val tableNames = tables.split(",").toTypedArray()
+        val tableNames = JSON.parseArray(tables).toArray()
         try {
-            val data: ByteArray = sysGeneratorService.generatorCode(tableNames)
+            val data: ByteArray = sysGeneratorService.generatorCode(tableNames.map { it.toString() })
             val fileName = "gender" + DateUtils.formatDateTime(LocalDateTime.now()) + ".zip"
             FileUtils.writeByteArrayToFile(File(GenUtils.classpath + "code/" + fileName), data)
         } catch (e: IOException) {
@@ -68,11 +69,5 @@ class SysGeneratorController @Autowired constructor(private val sysGeneratorServ
         }
 
         return Result().ok()
-        //        response.reset();
-        //        response.setHeader("Content-Disposition", "attachment; filename=\"renren.zip\"");
-        //        response.addHeader("Content-Length", "" + data.length);
-        //        response.setContentType("application/octet-stream; charset=UTF-8");
-        //
-        //        IOUtils.write(data, response.getOutputStream());
     }
 }

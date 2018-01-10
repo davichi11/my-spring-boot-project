@@ -41,7 +41,6 @@ class ApiLoginController @Autowired constructor(private val userService: UserSer
     fun login(mobile: String, password: String): Result {
         Assert.isBlank(mobile, "手机号不能为空")
         Assert.isBlank(password, "密码不能为空")
-
         //用户登录
         val userId = userService.login(mobile, password)
 

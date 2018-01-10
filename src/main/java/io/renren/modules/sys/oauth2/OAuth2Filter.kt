@@ -75,7 +75,7 @@ class OAuth2Filter : AuthenticatingFilter() {
         var token = httpRequest.getHeader("token")
 
         //如果header中不存在token，则从参数中获取token
-        if (StringUtils.isBlank(token)) {
+        if (token.isNullOrBlank()) {
             token = httpRequest.getParameter("token")
         }
 

@@ -36,7 +36,7 @@ class SysGeneratorServiceImpl @Autowired constructor(private val sysGeneratorDao
         return sysGeneratorDao.queryColumns(tableName)
     }
 
-    override fun generatorCode(tableNames: Array<String>): ByteArray {
+    override fun generatorCode(tableNames: List<String>): ByteArray {
         ByteArrayOutputStream().use { outputStream ->
             ZipOutputStream(outputStream).use { zip ->
                 tableNames.forEach { tableName ->

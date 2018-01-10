@@ -47,5 +47,5 @@ interface SysGeneratorService {
      * @param tableNames
      * @return
      */
-    fun generatorCode(tableNames: Array<String>): ByteArray
+    fun generatorCode(tableNames: List<String>): ByteArray
 }
