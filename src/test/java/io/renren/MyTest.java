@@ -28,6 +28,7 @@ public class MyTest {
         for (long i = 0; i < 50; i++) {
             System.out.println(fib(i));
         }
+
     }
 
     private boolean testString(int i) {

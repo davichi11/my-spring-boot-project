@@ -40,7 +40,7 @@
         <remote-addr>remote_host_ip</remote-addr>
         <remote-username>remote_host_username</remote-username>
         <remote-passwd>remote_host_password</remote-passwd>
-        <kotlin.version>1.2.0</kotlin.version>
+        <kotlin.version>1.2.20</kotlin.version>
     </properties>
 
     <dependencies>
