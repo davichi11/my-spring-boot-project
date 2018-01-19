@@ -27,7 +27,7 @@ import java.util.*
 class SysUserServiceImpl @Autowired constructor(private val sysUserDao: SysUserDao, private val sysUserRoleService: SysUserRoleService,
                                                 private val sysRoleDao: SysRoleDao) : SysUserService {
 
-    override fun queryAllPerms(userId: Long): List<String> {
+    override fun queryAllPerms(userId: Long): MutableList<String?> {
         return sysUserDao.queryAllPerms(userId)
     }
 

@@ -18,7 +18,7 @@ interface SysUserService {
      * @param userId 用户ID
      * @return
      */
-    fun queryAllPerms(userId: Long): List<String>
+    fun queryAllPerms(userId: Long): MutableList<String?>
 
     /**
      * 查询用户的所有菜单ID
