@@ -6,7 +6,6 @@ import io.renren.modules.api.annotation.AuthIgnore;
 import io.renren.modules.api.annotation.LoginUser;
 import io.renren.modules.api.entity.UserEntity;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,9 +26,10 @@ public class ApiTestController {
     /**
      * 获取用户信息
      */
+    @AuthIgnore
     @GetMapping("userInfo")
     @ApiOperation(value = "获取用户信息")
-    @ApiImplicitParam(paramType = "header", name = "token", value = "token", required = true)
+//    @ApiImplicitParam(paramType = "header", name = "token", value = "token", required = true)
     public Result userInfo(@LoginUser UserEntity user) {
         return Result.ok().put("user", user);
     }
