@@ -29,8 +29,8 @@ class SysUserRoleServiceImpl @Autowired constructor(private val sysUserRoleDao: 
 
         //保存用户与角色关系
         val map = HashMap<String, Any>(16)
-        map.put("userId", userId!!)
-        map.put("roleIdList", roleIdList)
+        map["userId"] = userId!!
+        map["roleIdList"] = roleIdList
         sysUserRoleDao.save(map)
     }
 

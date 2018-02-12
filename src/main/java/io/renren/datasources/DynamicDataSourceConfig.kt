@@ -35,8 +35,8 @@ class DynamicDataSourceConfig {
     @Primary
     fun dataSource(firstDataSource: DataSource, secondDataSource: DataSource): DynamicDataSource {
         val targetDataSources = mutableMapOf<String, DataSource>()
-        targetDataSources.put(DataSourceNames.FIRST, firstDataSource)
-        targetDataSources.put(DataSourceNames.SECOND, secondDataSource)
+        targetDataSources[DataSourceNames.FIRST] = firstDataSource
+        targetDataSources[DataSourceNames.SECOND] = secondDataSource
         return DynamicDataSource(firstDataSource, targetDataSources)
     }
 }

@@ -18,7 +18,7 @@ interface SysUserTokenService {
      * @param userId
      * @return
      */
-    fun queryByUserId(userId: Long): SysUserTokenEntity
+    fun queryByUserId(userId: Long): SysUserTokenEntity?
 
     /**
      * 根据token查询系统用户Token

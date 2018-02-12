@@ -70,15 +70,14 @@ class SysOssController @Autowired constructor(private val sysOssService: SysOssS
         //校验类型
         ValidatorUtils.validateEntity(config)
 
-        when {
-            config.type == Constant.CloudService.QINIU.value -> //校验七牛数据
-                ValidatorUtils.validateEntity(config, QiniuGroup::class.java)
-            config.type == Constant.CloudService.ALIYUN.value -> //校验阿里云数据
-                ValidatorUtils.validateEntity(config, AliyunGroup::class.java)
-            config.type == Constant.CloudService.QCLOUD.value -> //校验腾讯云数据
-                ValidatorUtils.validateEntity(config, QcloudGroup::class.java)
+        when (config.type) {
+        //校验七牛数据
+            Constant.CloudService.QINIU.value -> ValidatorUtils.validateEntity(config, QiniuGroup::class.java)
+        //校验阿里云数据
+            Constant.CloudService.ALIYUN.value -> ValidatorUtils.validateEntity(config, AliyunGroup::class.java)
+        //校验腾讯云数据
+            Constant.CloudService.QCLOUD.value -> ValidatorUtils.validateEntity(config, QcloudGroup::class.java)
         }
-
 
         try {
             sysConfigService.updateValueByKey(KEY, Gson().toJson(config))

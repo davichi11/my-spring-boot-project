@@ -14,6 +14,8 @@ import org.apache.velocity.app.Velocity
 import java.io.File
 import java.io.IOException
 import java.io.StringWriter
+import java.nio.file.Path
+import java.nio.file.Paths
 import java.time.LocalDate
 import java.util.*
 import java.util.zip.ZipEntry
@@ -67,6 +69,17 @@ object GenUtils {
             if (path.indexOf(":") != 1) {
                 path = File.separator + path
             }
+            return path
+        }
+
+    val codePath: String
+        get() {
+            var path = Thread.currentThread().contextClassLoader.getResource("").toString().replace("file:/".toRegex(), "").replace("%20".toRegex(), " ").trim { it <= ' ' }
+            if (path.indexOf(":") != 1) {
+                path = File.separator + path
+            }
+            val p: Path = Paths.get(path)
+            path = p.parent.parent.toUri().path + "/src/main/resources/code/"
             return path
         }
 

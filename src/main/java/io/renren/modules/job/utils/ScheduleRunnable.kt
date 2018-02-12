@@ -20,7 +20,7 @@ constructor(beanName: String, methodName: String, private val params: String) : 
     private var method: Method? = null
 
     init {
-        if (StringUtils.isNotBlank(params)) {
+        if (params.isNotBlank()) {
             this.method = target.javaClass.getDeclaredMethod(methodName, String::class.java)
         } else {
             this.method = target.javaClass.getDeclaredMethod(methodName)

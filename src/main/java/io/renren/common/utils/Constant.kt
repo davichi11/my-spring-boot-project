@@ -11,7 +11,7 @@ object Constant {
     /**
      * 超级管理员ID
      */
-    val SUPER_ADMIN = 1
+    const val SUPER_ADMIN = 1
 
     /**
      * 菜单类型

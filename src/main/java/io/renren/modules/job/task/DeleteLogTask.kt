@@ -29,15 +29,15 @@ class DeleteLogTask @Autowired constructor(private val logService: SysLogService
         val map = Maps.newHashMap<String, Any>()
         var beginDate = LocalDate.now().minusMonths(1)
         var endDate = LocalDate.now()
-        if (StringUtils.contains(params, ",")) {
-            val strings = params.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        if (params.contains(",")) {
+            val strings = params.split(",").dropLastWhile { it.isEmpty() }.toTypedArray()
             //提取开始时间并转换
             beginDate = strings.filter { s -> s.toUpperCase().contains("BEGINDATE") }.map { convertToLocalDate(it) }[0]
             //提取结束时间并转换
             endDate = strings.filter { s -> s.toUpperCase().contains("ENDDATE") }.map { convertToLocalDate(it) }[0]
         }
-        map.put("beginDate", beginDate)
-        map.put("endDate", endDate)
+        map["beginDate"] = beginDate
+        map["endDate"] = endDate
         try {
             logService.deleteByParams(map)
         } catch (e: Exception) {
@@ -64,7 +64,8 @@ class DeleteLogTask @Autowired constructor(private val logService: SysLogService
         if (date.contains("=")) {
             separator = "="
         }
-        return DateUtils.stringFormatDate(StringUtils.substringAfter(date, separator))
+
+        return DateUtils.stringFormatDate(date.substringAfter(separator))
     }
 
 }

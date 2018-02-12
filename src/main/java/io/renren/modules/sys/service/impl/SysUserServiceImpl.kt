@@ -62,7 +62,7 @@ class SysUserServiceImpl @Autowired constructor(private val sysUserDao: SysUserD
         sysUserDao.save(user)
 
         //检查角色是否越权
-        checkRole(user)
+        user.checkRole()
 
         //保存用户与角色关系
         sysUserRoleService.saveOrUpdate(user.userId, user.roleIdList!!)
@@ -79,7 +79,7 @@ class SysUserServiceImpl @Autowired constructor(private val sysUserDao: SysUserD
         sysUserDao.update(user)
 
         //检查角色是否越权
-        checkRole(user)
+        user.checkRole()
 
         //保存用户与角色关系
         sysUserRoleService.saveOrUpdate(user.userId, user.roleIdList!!)
@@ -93,26 +93,26 @@ class SysUserServiceImpl @Autowired constructor(private val sysUserDao: SysUserD
 
     override fun updatePassword(userId: Long, password: String, newPassword: String): Int {
         val map = HashMap<String, Any>(16)
-        map.put("userId", userId)
-        map.put("password", password)
-        map.put("newPassword", newPassword)
+        map["userId"] = userId
+        map["password"] = password
+        map["newPassword"] = newPassword
         return sysUserDao.updatePassword(map)
     }
 
     /**
      * 检查角色是否越权
      */
-    private fun checkRole(user: SysUserEntity) {
+    private fun SysUserEntity.checkRole() {
         //如果不是超级管理员，则需要判断用户的角色是否自己创建
-        if (user.createUserId!!.toInt() == Constant.SUPER_ADMIN) {
+        if (this.createUserId!!.toInt() == Constant.SUPER_ADMIN) {
             return
         }
 
         //查询用户创建的角色列表
-        val roleIdList = sysRoleDao.queryRoleIdList(user.createUserId)
+        val roleIdList = sysRoleDao.queryRoleIdList(this.createUserId)
 
         //判断是否越权
-        if (!roleIdList.containsAll(user.roleIdList!!)) {
+        if (!roleIdList.containsAll(this.roleIdList!!)) {
             throw RRException("新增用户所选角色，不是本人创建")
         }
     }

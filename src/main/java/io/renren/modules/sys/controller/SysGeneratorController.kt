@@ -61,8 +61,8 @@ class SysGeneratorController @Autowired constructor(private val sysGeneratorServ
         val tableNames = JSON.parseArray(tables).toArray()
         try {
             val data: ByteArray = sysGeneratorService.generatorCode(tableNames.map { it.toString() })
-            val fileName = "gender" + DateUtils.formatDateTime(LocalDateTime.now()) + ".zip"
-            FileUtils.writeByteArrayToFile(File(GenUtils.classpath + "code/" + fileName), data)
+            val fileName = "gender" + DateUtils.formatDateTime(LocalDateTime.now(),"yyyyMMddHHmmss") + ".zip"
+            FileUtils.writeByteArrayToFile(File(GenUtils.codePath + fileName), data)
         } catch (e: IOException) {
             log.error("文件写入异常", e)
             return Result().error(msg = "生成失败,文件写入异常")

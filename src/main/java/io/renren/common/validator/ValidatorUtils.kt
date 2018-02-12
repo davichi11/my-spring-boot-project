@@ -15,11 +15,7 @@ import javax.validation.Validator
  * @date 2017-03-15 10:50
  */
 object ValidatorUtils {
-    private var validator: Validator? = null
-
-    init {
-        validator = Validation.buildDefaultValidatorFactory().validator
-    }
+    private var validator: Validator = Validation.buildDefaultValidatorFactory().validator
 
     /**
      * 校验对象
@@ -30,8 +26,8 @@ object ValidatorUtils {
      */
     @Throws(RRException::class)
     fun validateEntity(any: Any, vararg groups: Class<*>) {
-        val constraintViolations = validator!!.validate(any, *groups)
-        if (!constraintViolations.isEmpty()) {
+        val constraintViolations = validator.validate(any, *groups)
+        if (constraintViolations.isNotEmpty()) {
             val constraint = constraintViolations.iterator().next()
             throw RRException(constraint.message)
         }

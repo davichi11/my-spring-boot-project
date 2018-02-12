@@ -13,7 +13,7 @@ import io.renren.modules.sys.service.SysConfigService
  * @date 2017-03-26 10:18
  */
 object OSSFactory {
-    private var sysConfigService: SysConfigService? = null
+    private var sysConfigService: SysConfigService
 
     init {
         OSSFactory.sysConfigService = ApplicationContextHolder.getBean("sysConfigService") as SysConfigService
@@ -21,7 +21,7 @@ object OSSFactory {
 
     fun build(): AbstractCloudStorageService? {
         //获取云存储配置信息
-        val config = sysConfigService!!.getConfigObject(ConfigConstant.CLOUD_STORAGE_CONFIG_KEY, CloudStorageConfig::class.java)
+        val config = sysConfigService.getConfigObject(ConfigConstant.CLOUD_STORAGE_CONFIG_KEY, CloudStorageConfig::class.java)
 
         return when {
             config.type == Constant.CloudService.QINIU.value -> QiniuAbstractCloudStorageService(config)

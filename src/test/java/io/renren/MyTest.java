@@ -25,9 +25,17 @@ public class MyTest {
 //        int sum = stringList.stream().filter(Objects::nonNull).distinct().mapToInt(NumberUtils::toInt).filter(i -> i % 2 == 0).sum();
 //        System.out.println(sum);
 
-        for (long i = 0; i < 50; i++) {
-            System.out.println(fib(i));
-        }
+        //for (long i = 0; i < 50; i++) {
+        //    System.out.println(fib(i));
+        //}
+
+        List<String> list = Lists.newArrayList("an", "apple", "ban");
+        Map<String, Integer> map = new HashMap<>();
+        list.stream().map(s -> String.valueOf((s.charAt(0)))).forEach(key -> map.merge(key, 1, (i, i2) -> i + i2));
+
+
+        System.out.println(map);
+
     }
 
     private boolean testString(int i) {
@@ -46,6 +54,7 @@ public class MyTest {
     public void test1() {
         Integer x = new Integer(1);
         Integer y = x;
+        System.out.println(x == y);
         System.out.println(Objects.equals(x, y));
         x += 0;
         System.out.println(x == y);
@@ -91,7 +100,7 @@ public class MyTest {
 
         Multiset<String> wordsMultiset = HashMultiset.create();
         wordsMultiset.addAll(wordList);
-        wordsMultiset.forEachEntry((s, value) -> System.out.println(MessageFormat.format("string={0},value={1}",s,value)));
+        wordsMultiset.forEachEntry((s, value) -> System.out.println(MessageFormat.format("string={0},value={1}", s, value)));
 
 //        wordsMultiset.forEach(s -> System.out.println("key=" + s + "||count=" + wordsMultiset.count(s)));
 

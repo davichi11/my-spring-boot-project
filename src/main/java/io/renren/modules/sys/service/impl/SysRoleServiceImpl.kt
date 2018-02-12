@@ -23,8 +23,10 @@ import java.time.LocalDateTime
  * @date 2016年9月18日 上午9:45:12
  */
 @Service("sysRoleService")
-class SysRoleServiceImpl @Autowired constructor(private val sysRoleDao: SysRoleDao, private val sysUserRoleService: SysUserRoleService,
-                                                private val sysRoleMenuService: SysRoleMenuService, private val sysUserDao: SysUserDao) : SysRoleService {
+class SysRoleServiceImpl @Autowired constructor(
+        private val sysRoleDao: SysRoleDao,
+        private val sysUserRoleService: SysUserRoleService,
+        private val sysRoleMenuService: SysRoleMenuService, private val sysUserDao: SysUserDao) : SysRoleService {
 
     override fun queryObject(roleId: Long?): SysRoleEntity {
         return sysRoleDao.queryObject(roleId!!)
@@ -45,7 +47,7 @@ class SysRoleServiceImpl @Autowired constructor(private val sysRoleDao: SysRoleD
         sysRoleDao.save(role)
 
         //检查权限是否越权
-        checkPrems(role)
+        role.checkPrems()
 
         //保存角色与菜单关系
         sysRoleMenuService.saveOrUpdate(role.roleId, role.menuIdList!!)
@@ -57,7 +59,7 @@ class SysRoleServiceImpl @Autowired constructor(private val sysRoleDao: SysRoleD
         sysRoleDao.update(role)
 
         //检查权限是否越权
-        checkPrems(role)
+        role.checkPrems()
 
         //更新角色与菜单关系
         role.menuIdList?.let { sysRoleMenuService.saveOrUpdate(role.roleId, it) }
@@ -76,17 +78,17 @@ class SysRoleServiceImpl @Autowired constructor(private val sysRoleDao: SysRoleD
     /**
      * 检查权限是否越权
      */
-    private fun checkPrems(role: SysRoleEntity) {
+    private fun SysRoleEntity.checkPrems() {
         //如果不是超级管理员，则需要判断角色的权限是否超过自己的权限
-        if (role.createUserId!!.toInt() == Constant.SUPER_ADMIN) {
+        if (this.createUserId!!.toInt() == Constant.SUPER_ADMIN) {
             return
         }
 
         //查询用户所拥有的菜单列表
-        val menuIdList = sysUserDao.queryAllMenuId(role.createUserId)
+        val menuIdList = sysUserDao.queryAllMenuId(this.createUserId)
 
         //判断是否越权
-        if (!menuIdList.containsAll(role.menuIdList!!)) {
+        if (!menuIdList.containsAll(this.menuIdList!!)) {
             throw RRException("新增角色的权限，已超出你的权限范围")
         }
     }

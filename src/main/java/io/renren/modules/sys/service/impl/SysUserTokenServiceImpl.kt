@@ -15,7 +15,7 @@ import java.time.LocalDateTime
 @Service("sysUserTokenService")
 class SysUserTokenServiceImpl @Autowired constructor(private val sysUserTokenDao: SysUserTokenDao) : SysUserTokenService {
 
-    override fun queryByUserId(userId: Long): SysUserTokenEntity {
+    override fun queryByUserId(userId: Long): SysUserTokenEntity? {
         return sysUserTokenDao.queryByUserId(userId)
     }
 
@@ -66,6 +66,6 @@ class SysUserTokenServiceImpl @Autowired constructor(private val sysUserTokenDao
         /**
          * 12小时后过期
          */
-        private val EXPIRE = 3600 * 12
+        private const val EXPIRE = 3600 * 12
     }
 }

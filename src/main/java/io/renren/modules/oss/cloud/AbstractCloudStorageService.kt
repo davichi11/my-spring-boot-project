@@ -1,7 +1,6 @@
 package io.renren.modules.oss.cloud
 
 import io.renren.common.utils.DateUtils
-import org.apache.commons.lang.StringUtils
 import java.io.InputStream
 import java.time.LocalDate
 import java.util.*
@@ -31,7 +30,7 @@ abstract class AbstractCloudStorageService {
         //文件路径
         var path = DateUtils.format(LocalDate.now(), "yyyyMMdd") + "/" + uuid
 
-        if (StringUtils.isNotBlank(prefix)) {
+        if (prefix.isNotEmpty()) {
             path = prefix + "/" + path
         }
 

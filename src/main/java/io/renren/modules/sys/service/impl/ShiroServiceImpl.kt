@@ -11,7 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-class ShiroServiceImpl @Autowired constructor(private val sysMenuDao: SysMenuDao, private val sysUserDao: SysUserDao,
+class ShiroServiceImpl @Autowired constructor(
+        private val sysMenuDao: SysMenuDao, private val sysUserDao: SysUserDao,
                                               private val sysUserTokenDao: SysUserTokenDao) : ShiroService {
 
     override fun getUserPermissions(userId: Long): MutableSet<String> {

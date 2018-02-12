@@ -85,8 +85,8 @@ class ScheduleJobServiceImpl @Autowired constructor(private val scheduler: Sched
 
     override fun updateBatch(jobIds: Array<Long>, status: Int): Int {
         val map = HashMap<String, Any>(16)
-        map.put("list", jobIds)
-        map.put("status", status)
+        map["list"] = jobIds
+        map["status"] = status
         return schedulerJobDao.updateBatch(map)
     }
 

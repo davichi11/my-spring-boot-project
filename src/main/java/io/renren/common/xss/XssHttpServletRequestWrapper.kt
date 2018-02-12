@@ -1,7 +1,6 @@
 package io.renren.common.xss
 
 import org.apache.commons.io.IOUtils
-import org.apache.commons.lang.StringUtils
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import java.io.ByteArrayInputStream
@@ -36,7 +35,7 @@ class XssHttpServletRequestWrapper(
 
         //为空，直接返回
         var json = IOUtils.toString(super.getInputStream(), "utf-8")
-        if (StringUtils.isBlank(json)) {
+        if (json.isBlank()) {
             return super.getInputStream()
         }
 
@@ -72,7 +71,7 @@ class XssHttpServletRequestWrapper(
 
     override fun getParameterValues(name: String): Array<String>? {
         val parameters = super.getParameterValues(name)
-        if (parameters == null || parameters.isEmpty()) {
+        if (parameters.isEmpty()) {
             return null
         }
         return parameters.map { xssEncode(it) }.toTypedArray()
@@ -85,11 +84,8 @@ class XssHttpServletRequestWrapper(
     }
 
     override fun getHeader(name: String): String? {
-        var value = super.getHeader(xssEncode(name))
-        if (StringUtils.isNotBlank(value)) {
-            value = xssEncode(value)
-        }
-        return value
+        val value = super.getHeader(xssEncode(name))
+        return if (value != null && value.isNotBlank()) xssEncode(value) else value
     }
 
     private fun xssEncode(input: String): String {

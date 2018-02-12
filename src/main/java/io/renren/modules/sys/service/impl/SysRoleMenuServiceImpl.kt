@@ -29,8 +29,8 @@ class SysRoleMenuServiceImpl @Autowired constructor(private val sysRoleMenuDao: 
 
         //保存角色与菜单关系
         val map = mutableMapOf<String,Any>()
-        map.put("roleId", roleId)
-        map.put("menuIdList", menuIdList)
+        map["roleId"] = roleId
+        map["menuIdList"] = menuIdList
         sysRoleMenuDao.save(map)
     }
 

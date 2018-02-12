@@ -22,19 +22,19 @@ class TokenServiceImpl @Autowired constructor(private val tokenDao: TokenDao): T
         return tokenDao.queryByToken(token)
     }
 
-    @Transactional(rollbackFor = arrayOf(Exception::class))
+    @Transactional(rollbackFor = [(Exception::class)])
     @Throws(Exception::class)
     override fun save(token: TokenEntity) {
         tokenDao.save(token)
     }
 
-    @Transactional(rollbackFor = arrayOf(Exception::class))
+    @Transactional(rollbackFor = [(Exception::class)])
     @Throws(Exception::class)
     override fun update(token: TokenEntity) {
         tokenDao.update(token)
     }
 
-    @Transactional(rollbackFor = arrayOf(Exception::class))
+    @Transactional(rollbackFor = [(Exception::class)])
     @Throws(Exception::class)
     override fun createToken(userId: Long): Map<String, Any> {
         //生成一个token
