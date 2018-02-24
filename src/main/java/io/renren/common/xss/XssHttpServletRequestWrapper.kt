@@ -70,7 +70,7 @@ class XssHttpServletRequestWrapper(
     }
 
     override fun getParameterValues(name: String): Array<String>? {
-        val parameters = super.getParameterValues(name)
+        val parameters = super.getParameterValues(name)?: arrayOf()
         if (parameters.isEmpty()) {
             return null
         }

@@ -43,7 +43,7 @@ class SysUserController @Autowired constructor(private val sysUserService: SysUs
     fun list(@RequestParam params: MutableMap<String, Any>): Result {
         //只有超级管理员，才能查看所有管理员列表
         if (userId!!.toInt() != Constant.SUPER_ADMIN) {
-            params.put("createUserId", userId!!)
+            params["createUserId"] = userId!!
         }
 
         //查询列表数据

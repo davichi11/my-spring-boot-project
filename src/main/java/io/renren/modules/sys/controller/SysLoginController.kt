@@ -8,7 +8,6 @@ import io.renren.config.OpenCaptcha
 import io.renren.modules.sys.service.SysUserService
 import io.renren.modules.sys.service.SysUserTokenService
 import org.apache.commons.io.IOUtils
-import org.apache.commons.lang3.BooleanUtils
 import org.apache.shiro.crypto.hash.Sha256Hash
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -31,7 +30,7 @@ import javax.servlet.http.HttpServletResponse
 class SysLoginController @Autowired constructor(private val producer: Producer, private val sysUserService: SysUserService,
                                                 private val sysUserTokenService: SysUserTokenService) {
     @Autowired
-    private val cap: OpenCaptcha? = null
+    private lateinit var cap: OpenCaptcha
     private val log = LoggerFactory.getLogger(SysLoginController::class.java)
 
     @RequestMapping("captcha.jpg")
@@ -61,7 +60,7 @@ class SysLoginController @Autowired constructor(private val producer: Producer, 
     @Throws(IOException::class)
     fun login(username: String, password: String, inCaptcha: String?): Map<String, Any> {
         //是否开启验证码
-        if (BooleanUtils.toBoolean(cap!!.isOpen)) {
+        if (cap.isOpen.toBoolean()) {
             val captcha = ShiroUtils.getCaptcha(Constants.KAPTCHA_SESSION_KEY)
             if (inCaptcha == null || captcha.toLowerCase() != inCaptcha.toLowerCase()) {
                 return Result().error(msg = "验证码不正确")

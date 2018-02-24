@@ -37,7 +37,7 @@ class SysRoleController @Autowired constructor(private val sysRoleService: SysRo
     fun list(@RequestParam params: MutableMap<String, Any>): Result {
         //如果不是超级管理员，则只查询自己创建的角色列表
         if (userId!!.toInt() != Constant.SUPER_ADMIN) {
-            params.put("createUserId", userId!!)
+            params["createUserId"] = userId!!
         }
         //查询列表数据
         val pageInfo = PageHelper.startPage<Any>((params["page"] as String).toInt(), (params["limit"] as String).toInt()).
@@ -55,7 +55,7 @@ class SysRoleController @Autowired constructor(private val sysRoleService: SysRo
 
         //如果不是超级管理员，则只查询自己所拥有的角色列表
         if (userId!!.toInt() != Constant.SUPER_ADMIN) {
-            map.put("createUserId", userId!!)
+            map["createUserId"] = userId!!
         }
         val list = sysRoleService.queryList(map)
 

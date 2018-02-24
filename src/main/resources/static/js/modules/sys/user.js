@@ -80,7 +80,7 @@ let vm = new Vue({
 
             vm.getUser(userId);
             //获取角色信息
-            this.getRoleList();
+            vm.getRoleList();
         },
         del: () => {
             let userIds = getSelectedRows();
