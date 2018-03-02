@@ -1,10 +1,10 @@
 package io.renren.config
 
 import io.renren.common.xss.XssFilter
+import org.apache.shiro.web.servlet.ShiroFilter
 import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.web.filter.DelegatingFilterProxy
 import javax.servlet.DispatcherType
 
 /**
@@ -18,9 +18,9 @@ import javax.servlet.DispatcherType
 class FilterConfig {
 
     @Bean
-    fun shiroFilterRegistration(): FilterRegistrationBean {
-        val registration = FilterRegistrationBean()
-        registration.filter = DelegatingFilterProxy("shiroFilter")
+    fun shiroFilterRegistration(): FilterRegistrationBean<ShiroFilter> {
+        val registration = FilterRegistrationBean<ShiroFilter>()
+//        registration.filter = DelegatingFilterProxy("shiroFilter")
         //该值缺省为false，表示生命周期由SpringApplicationContext管理，设置为true则表示由ServletContainer管理
         registration.addInitParameter("targetFilterLifecycle", "true")
         registration.isEnabled = true
@@ -30,8 +30,8 @@ class FilterConfig {
     }
 
     @Bean
-    fun xssFilterRegistration(): FilterRegistrationBean {
-        val registration = FilterRegistrationBean()
+    fun xssFilterRegistration(): FilterRegistrationBean<XssFilter> {
+        val registration = FilterRegistrationBean<XssFilter>()
         registration.setDispatcherTypes(DispatcherType.REQUEST)
         registration.filter = XssFilter()
         registration.addUrlPatterns("/*")

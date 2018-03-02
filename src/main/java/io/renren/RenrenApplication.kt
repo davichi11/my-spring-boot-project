@@ -1,7 +1,7 @@
 package io.renren
 
-import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.runApplication
 
 /**
  * spring_boot 启动类
@@ -12,5 +12,5 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 class RenrenApplication
 
 fun main(args: Array<String>) {
-    SpringApplication.run(RenrenApplication::class.java, *args)
+    runApplication<RenrenApplication>()
 }
