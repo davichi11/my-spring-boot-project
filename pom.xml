@@ -40,7 +40,7 @@
         <remote-addr>remote_host_ip</remote-addr>
         <remote-username>remote_host_username</remote-username>
         <remote-passwd>remote_host_password</remote-passwd>
-        <kotlin.version>1.2.20</kotlin.version>
+        <kotlin.version>1.2.21</kotlin.version>
     </properties>
 
     <dependencies>
@@ -233,7 +233,7 @@
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-stdlib-jre8</artifactId>
+            <artifactId>kotlin-stdlib-jdk8</artifactId>
             <version>${kotlin.version}</version>
         </dependency>
         <dependency>
