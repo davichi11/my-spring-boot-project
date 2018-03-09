@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * @Description 验证码开启开关配置
  * @create 2017/10/23-15:29
  */
-@ConfigurationProperties(prefix = "renren.openKaptcha")
+@ConfigurationProperties(prefix = "renren.open-kaptcha")
 @Component
 public class OpenCaptcha {
     /**
