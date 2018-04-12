@@ -16,6 +16,8 @@ spring:
 #    datasource:
 #        type: com.alibaba.druid.pool.DruidDataSource
 #        driverClassName: com.mysql.jdbc.Driver
+    activiti:
+      check-process-definitions: false
     # jackson时间格式化
     jackson:
         time-zone: GMT+8
@@ -64,5 +66,5 @@ renren:
         # token有效时长，7天，单位秒
         expire: 604800
         header: token
-    openKaptcha:
-        isOpen: false
+    open-kaptcha:
+        is-open: false

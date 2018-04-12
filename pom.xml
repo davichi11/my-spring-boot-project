@@ -33,6 +33,7 @@
         <qiniu.version>[7.2.0, 7.2.99]</qiniu.version>
         <aliyun.oss.version>2.5.0</aliyun.oss.version>
         <qcloud.cos.version>4.4</qcloud.cos.version>
+        <activiti.version>6.0.0</activiti.version>
 
         <!--wagon plugin 配置-->
         <service-path>deploy_path</service-path>
@@ -40,7 +41,7 @@
         <remote-addr>remote_host_ip</remote-addr>
         <remote-username>remote_host_username</remote-username>
         <remote-passwd>remote_host_password</remote-passwd>
-        <kotlin.version>1.2.21</kotlin.version>
+        <kotlin.version>1.2.31</kotlin.version>
     </properties>
 
     <dependencies>
@@ -231,6 +232,16 @@
             <artifactId>jjwt</artifactId>
             <version>0.8.0</version>
         </dependency>
+
+        <!-- activiti -->
+        <dependency>
+            <groupId>org.activiti</groupId>
+            <artifactId>activiti-spring-boot-starter-basic</artifactId>
+            <version>${activiti.version}</version>
+        </dependency>
+
+
+        <!--kotlin-->
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib-jdk8</artifactId>
@@ -324,6 +335,13 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
             </plugin>
         </plugins>
     </build>
